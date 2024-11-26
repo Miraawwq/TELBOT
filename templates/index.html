@@ -49,52 +49,113 @@
         .cell:hover {
             background-color: #BA55D3;
         }
+
+        .lobby-list {
+            margin-top: 20px;
+            list-style-type: none;
+        }
+
+        .lobby-list li {
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>Online Tic-Tac-Toe</h1>
+
+    <div id="nickname-form">
+        <input type="text" id="nickname" placeholder="Enter your nickname" />
+        <button onclick="createLobby()">Create Lobby</button>
+    </div>
+
     <div id="status">Waiting for an opponent...</div>
     <div id="game-board"></div>
+
+    <div id="lobby-section">
+        <h2>Available Lobbies</h2>
+        <ul id="lobby-list" class="lobby-list"></ul>
+        <button onclick="joinLobby()">Join Lobby</button>
+    </div>
+
     <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
     <script>
         const socket = io();
         const board = document.getElementById('game-board');
         const status = document.getElementById('status');
-
+        const lobbyList = document.getElementById('lobby-list');
         let myTurn = false;
         let room = null;
+        let nickname = '';
+        let selectedLobby = '';
 
-        for (let i = 0; i < 9; i++) {
-            const cell = document.createElement('div');
-            cell.classList.add('cell');
-            cell.dataset.index = i;
-            cell.addEventListener('click', () => {
-                if (myTurn && !cell.textContent) {
-                    cell.textContent = 'X';
-                    socket.emit('makeMove', { room, cellIndex: i });
-                    myTurn = false;
-                    status.textContent = "Opponent's turn...";
-                }
-            });
-            board.appendChild(cell);
+        // Никнейм
+        function createLobby() {
+            nickname = document.getElementById('nickname').value;
+            if (!nickname) {
+                alert('Please enter a nickname!');
+                return;
+            }
+            socket.emit('createLobby', nickname);
+            document.getElementById('nickname-form').style.display = 'none';
+            document.getElementById('lobby-section').style.display = 'block';
         }
 
-        socket.on('startGame', (data) => {
+        // Присоединение к лобби
+        function joinLobby() {
+            if (!nickname) {
+                alert('Please enter a nickname first!');
+                return;
+            }
+            if (!selectedLobby) {
+                alert('Please select a lobby!');
+                return;
+            }
+            socket.emit('joinLobby', selectedLobby, nickname);
+        }
+
+        // Обновление списка лобби
+        socket.on('updateLobbies', function(lobbies) {
+            lobbyList.innerHTML = '';
+            lobbies.forEach(function(lobby) {
+                const li = document.createElement('li');
+                li.textContent = lobby;
+                li.onclick = function() {
+                    selectedLobby = lobby;
+                };
+                lobbyList.appendChild(li);
+            });
+        });
+
+        // Запуск игры
+        socket.on('startGame', function(data) {
             room = data.room;
             status.textContent = 'Game started! Your turn.';
             myTurn = true;
+
+            // Создание игрового поля
+            board.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.index = i;
+                cell.addEventListener('click', () => {
+                    if (myTurn && !cell.textContent) {
+                        cell.textContent = 'X';
+                        socket.emit('makeMove', { room, cellIndex: i });
+                        myTurn = false;
+                        status.textContent = "Opponent's turn...";
+                    }
+                });
+                board.appendChild(cell);
+            }
         });
 
-        socket.on('opponentMove', ({ cellIndex }) => {
-            const cell = board.children[cellIndex];
+        // Ход противника
+        socket.on('opponentMove', function(data) {
+            const cell = board.children[data.cellIndex];
             cell.textContent = 'O';
             myTurn = true;
             status.textContent = 'Your turn!';
-        });
-
-        socket.on('disconnect', () => {
-            status.textContent = 'Your opponent has disconnected. Please wait for a new one.';
-            myTurn = false;
         });
     </script>
 </body>
