@@ -1,10 +1,11 @@
 from flask import Flask, render_template
-from flask_socketio import SocketIO, join_room, emit
+from flask_socketio import SocketIO, join_room, emit, disconnect
+from flask_socketio import send
 
 app = Flask(__name__)
 socketio = SocketIO(app)
 
-waiting_player = None
+waiting_player = None  # Это будет хранить информацию о первом игроке.
 
 @app.route('/')
 def index():
@@ -13,14 +14,18 @@ def index():
 @socketio.on('connect')
 def on_connect():
     global waiting_player
+    print(f"Player connected: {request.sid}")
+
     if waiting_player:
+        # Если есть ожидающий игрок, создаем игру
         room = f"room-{waiting_player['sid']}-{request.sid}"
         join_room(room)
-        join_room(room, sid=waiting_player['sid'])
         emit('startGame', {'room': room}, room=room)
-        waiting_player = None
+        waiting_player = None  # Освобождаем место для нового игрока
     else:
+        # Если нет ожидающего игрока, то этот игрок ждет
         waiting_player = {'sid': request.sid}
+        print(f"Player {request.sid} is waiting for an opponent.")
 
 @socketio.on('makeMove')
 def on_make_move(data):
@@ -31,6 +36,7 @@ def on_make_move(data):
 @socketio.on('disconnect')
 def on_disconnect():
     global waiting_player
+    print(f"Player disconnected: {request.sid}")
     if waiting_player and waiting_player['sid'] == request.sid:
         waiting_player = None
 
