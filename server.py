@@ -21,11 +21,11 @@ def on_connect():
 # Отключение игрока
 @socketio.on('disconnect')
 def on_disconnect():
-    for lobby in lobbies.values():
+    for lobby_id, lobby in lobbies.items():
         if request.sid in lobby:
             lobby.remove(request.sid)
             if len(lobby) == 0:
-                del lobbies[lobby[0]]  # Удаляем пустое лобби
+                del lobbies[lobby_id]  # Удаляем пустое лобби
             break
     print(f"Player disconnected: {request.sid}")
     emit('updateLobbies', list(lobbies.keys()), broadcast=True)
@@ -36,7 +36,7 @@ def create_lobby(nickname):
     if not nickname:
         emit('error', 'Please provide a nickname before creating a lobby.')
         return
-    lobby_id = f"lobby-{nickname}-{request.sid}"
+    lobby_id = f"{nickname}'s Lobby"  # Лобби будет называться по имени создателя
     lobbies[lobby_id].append(request.sid)
     print(f"Lobby created: {lobby_id} by {nickname}")
     emit('updateLobbies', list(lobbies.keys()), broadcast=True)
