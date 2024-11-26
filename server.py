@@ -33,6 +33,9 @@ def on_disconnect():
 # Создание лобби
 @socketio.on('createLobby')
 def create_lobby(nickname):
+    if not nickname:
+        emit('error', 'Please provide a nickname before creating a lobby.')
+        return
     lobby_id = f"lobby-{nickname}-{request.sid}"
     lobbies[lobby_id].append(request.sid)
     print(f"Lobby created: {lobby_id} by {nickname}")
@@ -41,6 +44,9 @@ def create_lobby(nickname):
 # Присоединение к лобби
 @socketio.on('joinLobby')
 def join_lobby(lobby_id, nickname):
+    if not nickname:
+        emit('error', 'Please provide a nickname before joining a lobby.')
+        return
     if lobby_id in lobbies and len(lobbies[lobby_id]) < 2:
         lobbies[lobby_id].append(request.sid)
         join_room(lobby_id)
