@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Крестики-Нолики</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; }
+    .board { display: grid; grid-template-columns: repeat(3, 100px); gap: 5px; margin: 20px auto; }
+    .cell { width: 100px; height: 100px; background: #f3f3f3; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; border: 1px solid #ccc; }
+    .cell.taken { cursor: not-allowed; background: #eaeaea; }
+  </style>
+</head>
+<body>
+  <h1>Крестики-Нолики</h1>
+  <div id="status">Ожидаем соперника...</div>
+  <div class="board" id="board"></div>
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    const board = document.getElementById("board");
+    const status = document.getElementById("status");
+
+    let gameId = null;
+    let playerMark = null;
+    let currentTurn = null;
+
+    // Создаем доску
+    function createBoard() {
+      board.innerHTML = "";
+      for (let i = 0; i < 9; i++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.dataset.index = i;
+        cell.addEventListener("click", () => makeMove(i));
+        board.appendChild(cell);
+      }
+    }
+
+    // Подключаемся к игре
+    async function connectToGame() {
+      const response = await fetch("https://your-server.com/connect", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: tg.initDataUnsafe.user.id }),
+      });
+      const data = await response.json();
+      gameId = data.gameId;
+      playerMark = data.mark;
+      status.textContent = `Вы играете за "${playerMark}". Ходит ${data.currentTurn}.`;
+      currentTurn = data.currentTurn;
+    }
+
+    // Делаем ход
+    async function makeMove(index) {
+      if (currentTurn !== playerMark) {
+        alert("Не ваш ход!");
+        return;
+      }
+      const cell = document.querySelector(`.cell[data-index="${index}"]`);
+      if (cell.classList.contains("taken")) return;
+
+      const response = await fetch(`https://your-server.com/move/${gameId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ index, mark: playerMark }),
+      });
+      const data = await response.json();
+      updateBoard(data.board);
+      currentTurn = data.currentTurn;
+      status.textContent = `Ходит ${currentTurn}.`;
+
+      if (data.winner) {
+        status.textContent = data.winner === "Draw" ? "Ничья!" : `Победил ${data.winner}!`;
+        board.innerHTML = "";
+      }
+    }
+
+    // Обновляем доску
+    function updateBoard(newBoard) {
+      newBoard.forEach((mark, i) => {
+        const cell = document.querySelector(`.cell[data-index="${i}"]`);
+        cell.textContent = mark;
+        if (mark) cell.classList.add("taken");
+      });
+    }
+
+    createBoard();
+    connectToGame();
+  </script>
+</body>
+</html>
