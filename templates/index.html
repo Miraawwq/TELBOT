@@ -10,19 +10,19 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            background-color: #4B0082; /* Темно-фиолетовый фон */
-            color: #FFFFFF; /* Белый текст */
+            background-color: #4B0082;
+            color: #FFFFFF;
         }
 
         h1 {
             margin: 20px;
-            color: #E6E6FA; /* Лавандовый */
+            color: #E6E6FA;
         }
 
         #status {
             font-size: 1.2rem;
             margin: 10px 0;
-            color: #FFD700; /* Золотой */
+            color: #FFD700;
         }
 
         #game-board {
@@ -40,14 +40,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid #8A2BE2; /* Фиолетовая рамка */
-            background-color: #9370DB; /* Средне-фиолетовый */
+            border: 2px solid #8A2BE2;
+            background-color: #9370DB;
             cursor: pointer;
             color: #FFFFFF;
         }
 
         .cell:hover {
-            background-color: #BA55D3; /* Светло-фиолетовый при наведении */
+            background-color: #BA55D3;
         }
     </style>
 </head>
@@ -90,6 +90,11 @@
             cell.textContent = 'O';
             myTurn = true;
             status.textContent = 'Your turn!';
+        });
+
+        socket.on('disconnect', () => {
+            status.textContent = 'Your opponent has disconnected. Please wait for a new one.';
+            myTurn = false;
         });
     </script>
 </body>
