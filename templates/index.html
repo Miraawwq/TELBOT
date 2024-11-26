@@ -3,127 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Drawing</title>
+    <title>Agar.io-like Game</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
         }
-
-        h1 {
-            margin: 20px;
-        }
-
-        #drawing-canvas {
-            border: 2px solid #000;
-            background-color: white;
-            margin: 0 auto;
-            display: block;
-        }
-
-        .tools {
-            margin: 20px;
-        }
-
-        #clear-button {
-            padding: 10px 20px;
-            background-color: #ff4747;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        #clear-button:hover {
-            background-color: #e03e3e;
+        canvas {
+            border: 2px solid black;
         }
     </style>
 </head>
 <body>
-
-    <h1>Online Drawing Board</h1>
-
-    <canvas id="drawing-canvas" width="800" height="600"></canvas>
-
-    <div class="tools">
-        <button id="clear-button">Clear Canvas</button>
-    </div>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
 
     <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
     <script>
         const socket = io();
-
-        // Настройка холста
-        const canvas = document.getElementById('drawing-canvas');
+        const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
-        let painting = false;
 
-        // Координаты начала рисования
-        let lastX = 0;
-        let lastY = 0;
+        let playerId = Math.random().toString(36).substring(7);  // Уникальный идентификатор игрока
+        let moveX = 0;
+        let moveY = 0;
 
-        // Функция для рисования
-        function startPosition(e) {
-            painting = true;
-            [lastX, lastY] = [e.offsetX, e.offsetY];
-        }
+        // Игроки
+        let players = {};
 
-        // Функция для остановки рисования
-        function endPosition() {
-            painting = false;
-        }
+        // Логика движения игрока
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowUp') moveY = -5;
+            if (e.key === 'ArrowDown') moveY = 5;
+            if (e.key === 'ArrowLeft') moveX = -5;
+            if (e.key === 'ArrowRight') moveX = 5;
+        });
 
-        // Функция для рисования на холсте
-        function draw(e) {
-            if (!painting) return;
-            ctx.beginPath();
-            ctx.moveTo(lastX, lastY);
-            ctx.lineTo(e.offsetX, e.offsetY);
-            ctx.strokeStyle = '#000000';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            [lastX, lastY] = [e.offsetX, e.offsetY];
+        window.addEventListener('keyup', () => {
+            moveX = 0;
+            moveY = 0;
+        });
 
-            // Отправляем данные о рисовании на сервер
-            socket.emit('draw', {
-                x1: lastX,
-                y1: lastY,
-                x2: e.offsetX,
-                y2: e.offsetY
+        // Инициализация игры
+        socket.emit('join_game', { player_id: playerId });
+
+        // Отправка данных о движении игрока
+        function updatePlayerPosition() {
+            socket.emit('move_player', {
+                player_id: playerId,
+                move_x: moveX,
+                move_y: moveY
             });
         }
 
-        // Обработчики событий мыши
-        canvas.addEventListener('mousedown', startPosition);
-        canvas.addEventListener('mouseup', endPosition);
-        canvas.addEventListener('mousemove', draw);
-
-        // Получаем данные о рисовании от других пользователей
-        socket.on('draw', (data) => {
-            ctx.beginPath();
-            ctx.moveTo(data.x1, data.y1);
-            ctx.lineTo(data.x2, data.y2);
-            ctx.strokeStyle = '#000000';
-            ctx.lineWidth = 2;
-            ctx.stroke();
+        // Отображение состояния игры
+        socket.on('game_state', (gameState) => {
+            players = gameState;
+            renderGame();
         });
 
-        // Получаем все уже нарисованные линии при загрузке страницы
-        socket.emit('get_drawings');
-
-        // Очистка холста
-        document.getElementById('clear-button').addEventListener('click', () => {
+        // Отображение игры
+        function renderGame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            socket.emit('clear');
-        });
 
-        // Очистка холста для всех пользователей
-        socket.on('clear', () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        });
+            // Отображаем всех игроков
+            for (let id in players) {
+                const player = players[id];
+                ctx.beginPath();
+                ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+                ctx.fillStyle = id === playerId ? 'blue' : 'red';
+                ctx.fill();
+                ctx.stroke();
+            }
+
+            updatePlayerPosition();
+        }
+
+        // Игровой цикл
+        setInterval(renderGame, 1000 / 60);  // 60 FPS
     </script>
-
 </body>
 </html>
