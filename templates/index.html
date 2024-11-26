@@ -3,182 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe Online</title>
+    <title>Online Drawing</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            background-color: #4B0082;
-            color: #FFFFFF;
         }
 
         h1 {
             margin: 20px;
-            color: #E6E6FA;
         }
 
-        #status {
-            font-size: 1.2rem;
-            margin: 10px 0;
-            color: #FFD700;
+        #drawing-canvas {
+            border: 2px solid #000;
+            background-color: white;
+            margin: 0 auto;
+            display: block;
         }
 
-        #game-board {
-            display: grid;
-            grid-template-columns: repeat(3, 100px);
-            gap: 5px;
-            margin: 50px auto;
-            justify-content: center;
-        }
-
-        .cell {
-            width: 100px;
-            height: 100px;
-            font-size: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #8A2BE2;
-            background-color: #9370DB;
-            cursor: pointer;
-            color: #FFFFFF;
-        }
-
-        .cell:hover {
-            background-color: #BA55D3;
-        }
-
-        .lobby-list {
-            margin-top: 20px;
-            list-style-type: none;
-        }
-
-        .lobby-list li {
-            margin: 10px;
-            cursor: pointer;
-            background-color: #6A5ACD;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .lobby-list li:hover {
-            background-color: #483D8B;
-        }
-
-        #nickname-form {
+        .tools {
             margin: 20px;
+        }
+
+        #clear-button {
+            padding: 10px 20px;
+            background-color: #ff4747;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #clear-button:hover {
+            background-color: #e03e3e;
         }
     </style>
 </head>
 <body>
-    <h1>Online Tic-Tac-Toe</h1>
 
-    <div id="nickname-form">
-        <input type="text" id="nickname" placeholder="Enter your nickname" />
-        <button onclick="setNickname()">Enter Game</button>
-    </div>
+    <h1>Online Drawing Board</h1>
 
-    <div id="status">Waiting for an opponent...</div>
-    <div id="game-board"></div>
+    <canvas id="drawing-canvas" width="800" height="600"></canvas>
 
-    <div id="lobby-section" style="display:none;">
-        <h2>Available Lobbies</h2>
-        <ul id="lobby-list" class="lobby-list"></ul>
-        <button onclick="createLobby()">Create Lobby</button>
+    <div class="tools">
+        <button id="clear-button">Clear Canvas</button>
     </div>
 
     <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
     <script>
         const socket = io();
-        const board = document.getElementById('game-board');
-        const status = document.getElementById('status');
-        const lobbyList = document.getElementById('lobby-list');
-        let myTurn = false;
-        let room = null;
-        let nickname = '';
-        let selectedLobby = '';
 
-        // Устанавливаем никнейм
-        function setNickname() {
-            nickname = document.getElementById('nickname').value;
-            if (!nickname) {
-                alert('Please enter a nickname!');
-                return;
-            }
-            document.getElementById('nickname-form').style.display = 'none';
-            document.getElementById('lobby-section').style.display = 'block';
-            socket.emit('connect');
+        // Настройка холста
+        const canvas = document.getElementById('drawing-canvas');
+        const ctx = canvas.getContext('2d');
+        let painting = false;
+
+        // Координаты начала рисования
+        let lastX = 0;
+        let lastY = 0;
+
+        // Функция для рисования
+        function startPosition(e) {
+            painting = true;
+            [lastX, lastY] = [e.offsetX, e.offsetY];
         }
 
-        // Создание лобби
-        function createLobby() {
-            if (!nickname) {
-                alert('Please enter a nickname first!');
-                return;
-            }
-            socket.emit('createLobby', nickname);
+        // Функция для остановки рисования
+        function endPosition() {
+            painting = false;
         }
 
-        // Присоединение к лобби
-        function joinLobby(lobbyId) {
-            if (!nickname) {
-                alert('Please enter a nickname first!');
-                return;
-            }
-            socket.emit('joinLobby', lobbyId, nickname);
-        }
+        // Функция для рисования на холсте
+        function draw(e) {
+            if (!painting) return;
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            [lastX, lastY] = [e.offsetX, e.offsetY];
 
-        // Обновление списка лобби
-        socket.on('updateLobbies', function(lobbies) {
-            lobbyList.innerHTML = '';
-            lobbies.forEach(function(lobby) {
-                const li = document.createElement('li');
-                li.textContent = lobby;
-                li.onclick = function() {
-                    joinLobby(lobby);
-                };
-                lobbyList.appendChild(li);
+            // Отправляем данные о рисовании на сервер
+            socket.emit('draw', {
+                x1: lastX,
+                y1: lastY,
+                x2: e.offsetX,
+                y2: e.offsetY
             });
+        }
+
+        // Обработчики событий мыши
+        canvas.addEventListener('mousedown', startPosition);
+        canvas.addEventListener('mouseup', endPosition);
+        canvas.addEventListener('mousemove', draw);
+
+        // Получаем данные о рисовании от других пользователей
+        socket.on('draw', (data) => {
+            ctx.beginPath();
+            ctx.moveTo(data.x1, data.y1);
+            ctx.lineTo(data.x2, data.y2);
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
         });
 
-        // Запуск игры
-        socket.on('startGame', function(data) {
-            room = data.room;
-            status.textContent = 'Game started! Your turn.';
-            myTurn = true;
-
-            // Создание игрового поля
-            board.innerHTML = '';
-            for (let i = 0; i < 9; i++) {
-                const cell = document.createElement('div');
-                cell.classList.add('cell');
-                cell.dataset.index = i;
-                cell.addEventListener('click', () => {
-                    if (myTurn && !cell.textContent) {
-                        cell.textContent = 'X';
-                        socket.emit('makeMove', { room, cellIndex: i });
-                        myTurn = false;
-                        status.textContent = 'Waiting for opponent...';
-                    }
-                });
-                board.appendChild(cell);
-            }
+        // Очистить холст
+        document.getElementById('clear-button').addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            socket.emit('clear');
         });
 
-        // Ход противника
-        socket.on('opponentMove', function(data) {
-            const cell = board.children[data.cellIndex];
-            cell.textContent = 'O';
-            myTurn = true;
-            status.textContent = 'Your turn!';
-        });
-
-        // Обработка ошибок
-        socket.on('error', function(message) {
-            alert(message);
+        // Очистка холста для всех пользователей
+        socket.on('clear', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
         });
     </script>
+
 </body>
 </html>
