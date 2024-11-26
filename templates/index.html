@@ -57,6 +57,14 @@
 
         .lobby-list li {
             margin: 10px;
+            cursor: pointer;
+            background-color: #6A5ACD;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .lobby-list li:hover {
+            background-color: #483D8B;
         }
 
         #nickname-form {
@@ -79,7 +87,6 @@
         <h2>Available Lobbies</h2>
         <ul id="lobby-list" class="lobby-list"></ul>
         <button onclick="createLobby()">Create Lobby</button>
-        <button onclick="joinLobby()">Join Lobby</button>
     </div>
 
     <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
@@ -115,16 +122,12 @@
         }
 
         // Присоединение к лобби
-        function joinLobby() {
+        function joinLobby(lobbyId) {
             if (!nickname) {
                 alert('Please enter a nickname first!');
                 return;
             }
-            if (!selectedLobby) {
-                alert('Please select a lobby!');
-                return;
-            }
-            socket.emit('joinLobby', selectedLobby, nickname);
+            socket.emit('joinLobby', lobbyId, nickname);
         }
 
         // Обновление списка лобби
@@ -134,7 +137,7 @@
                 const li = document.createElement('li');
                 li.textContent = lobby;
                 li.onclick = function() {
-                    selectedLobby = lobby;
+                    joinLobby(lobby);
                 };
                 lobbyList.appendChild(li);
             });
@@ -157,7 +160,7 @@
                         cell.textContent = 'X';
                         socket.emit('makeMove', { room, cellIndex: i });
                         myTurn = false;
-                        status.textContent = "Opponent's turn...";
+                        status.textContent = 'Waiting for opponent...';
                     }
                 });
                 board.appendChild(cell);
@@ -172,9 +175,9 @@
             status.textContent = 'Your turn!';
         });
 
-        // Ошибка
-        socket.on('error', function(msg) {
-            alert(msg);
+        // Обработка ошибок
+        socket.on('error', function(message) {
+            alert(message);
         });
     </script>
 </body>
