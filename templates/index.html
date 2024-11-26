@@ -58,6 +58,10 @@
         .lobby-list li {
             margin: 10px;
         }
+
+        #nickname-form {
+            margin: 20px;
+        }
     </style>
 </head>
 <body>
@@ -65,15 +69,16 @@
 
     <div id="nickname-form">
         <input type="text" id="nickname" placeholder="Enter your nickname" />
-        <button onclick="createLobby()">Create Lobby</button>
+        <button onclick="setNickname()">Enter Game</button>
     </div>
 
     <div id="status">Waiting for an opponent...</div>
     <div id="game-board"></div>
 
-    <div id="lobby-section">
+    <div id="lobby-section" style="display:none;">
         <h2>Available Lobbies</h2>
         <ul id="lobby-list" class="lobby-list"></ul>
+        <button onclick="createLobby()">Create Lobby</button>
         <button onclick="joinLobby()">Join Lobby</button>
     </div>
 
@@ -88,16 +93,25 @@
         let nickname = '';
         let selectedLobby = '';
 
-        // Никнейм
-        function createLobby() {
+        // Устанавливаем никнейм
+        function setNickname() {
             nickname = document.getElementById('nickname').value;
             if (!nickname) {
                 alert('Please enter a nickname!');
                 return;
             }
-            socket.emit('createLobby', nickname);
             document.getElementById('nickname-form').style.display = 'none';
             document.getElementById('lobby-section').style.display = 'block';
+            socket.emit('connect');
+        }
+
+        // Создание лобби
+        function createLobby() {
+            if (!nickname) {
+                alert('Please enter a nickname first!');
+                return;
+            }
+            socket.emit('createLobby', nickname);
         }
 
         // Присоединение к лобби
@@ -156,6 +170,11 @@
             cell.textContent = 'O';
             myTurn = true;
             status.textContent = 'Your turn!';
+        });
+
+        // Ошибка
+        socket.on('error', function(msg) {
+            alert(msg);
         });
     </script>
 </body>
