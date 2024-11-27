@@ -1,6 +1,6 @@
 import os
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, CallbackContext, filters
+from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters
 
 # Файл с данными пользователей
 USER_DATA_FILE = "users.txt"
@@ -16,16 +16,16 @@ def load_users():
     return users
 
 # Обработчик текстовых сообщений
-def handle_message(update: Update, context: CallbackContext):
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Обработка сообщений с фамилией и отправка логина и пароля"""
     users = load_users()
     surname = update.message.text.strip().lower()
 
     if surname in users:
         login, password = users[surname]
-        update.message.reply_text(f"Ваш логин: {login}\nВаш пароль: {password}")
+        await update.message.reply_text(f"Ваш логин: {login}\nВаш пароль: {password}")
     else:
-        update.message.reply_text("Фамилия не найдена. Проверьте ввод.")
+        await update.message.reply_text("Фамилия не найдена. Проверьте ввод.")
 
 # Главная функция запуска бота
 def main():
@@ -34,16 +34,14 @@ def main():
     if not TOKEN:
         raise ValueError("Не указан TELEGRAM_BOT_TOKEN в переменных окружения!")
 
-    # Инициализация Updater
-    updater = Updater(TOKEN)
-    dispatcher = updater.dispatcher
+    # Создание приложения Telegram Bot
+    app = ApplicationBuilder().token(TOKEN).build()
 
     # Добавление обработчика для текстовых сообщений
-    dispatcher.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
     # Запуск бота
-    updater.start_polling()
-    updater.idle()
+    app.run_polling()
 
 if __name__ == "__main__":
     main()
