@@ -46,12 +46,10 @@ async def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT, handle_message))
 
-    # Устанавливаем вебхук
-    await app.bot.set_webhook(url=WEBHOOK_URL)
+    # Устанавливаем вебхук с указанием пути
+    await app.bot.set_webhook(url=WEBHOOK_URL + '/webhook')  # Добавляем путь /webhook
 
     print("Бот запущен!")
-    await app.run_webhook(port=8000, webhook_path='/', listen='0.0.0.0')
+    # Указываем только порт и слушателя
+    await app.run_webhook(port=8000, listen='0.0.0.0')
 
-if __name__ == '__main__':
-    import asyncio
-    asyncio.run(main())
