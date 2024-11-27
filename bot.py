@@ -1,6 +1,8 @@
 import os
-from telegram import Update
-from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, ContextTypes, filters
+from flask import Flask, render_template, request
+from werkzeug.exceptions import HTTPException
+
+app = Flask(__name__)
 
 # Файл с данными пользователей
 USER_DATA_FILE = "users.txt"
@@ -18,41 +20,21 @@ def load_users():
         print("Файл users.txt не найден!")
     return users
 
-# Обработчик команды /start
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Ответ на команду /start"""
-    await update.message.reply_text("Enter your last name in English")
+@app.route('/')
+def home():
+    return render_template('index.html', message=None)
 
-# Обработчик текстовых сообщений
-async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Обработка сообщений с фамилией и отправка логина и пароля"""
+@app.route('/submit', methods=['POST'])
+def submit():
+    surname = request.form['surname'].strip().lower()
     users = load_users()
-    surname = update.message.text.strip().lower()
-
     if surname in users:
         login, password = users[surname]
-        await update.message.reply_text(f"Ваш логин: {login}\nВаш пароль: {password}")
+        message = f"Your login: {login}\nYour password: {password}"
     else:
-        await update.message.reply_text("Фамилия не найдена. Проверьте ввод.")
-
-# Главная функция запуска бота
-def main():
-    TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-    PORT = int(os.getenv("PORT", "8443"))
-    WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://telbot-h594.onrender.com/")
-
-    app = ApplicationBuilder().token(TOKEN).build()
-
-    # Добавление обработчиков
-    app.add_handler(CommandHandler("start", start))  # Обработчик команды /start
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))  # Обработчик текстовых сообщений
-
-    # Запуск с вебхуком
-    app.run_webhook(
-        listen="0.0.0.0",
-        port=PORT,
-        webhook_url=WEBHOOK_URL,
-    )
+        message = "Surname not found. Please check the input."
+    
+    return render_template('index.html', message=message)
 
 if __name__ == "__main__":
-    main()
+    app.run(debug=True, host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
