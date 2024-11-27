@@ -1,3 +1,2 @@
-Ivanov;ivanov123;password1
-Hryhorev;petrov456;password2
-Sidorv;sidorov789;password3
+Иванов:ivanov_login:ivanov_password
+Петров:petrov_login:petrov_password
