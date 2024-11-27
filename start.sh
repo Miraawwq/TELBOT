@@ -1,2 +1,2 @@
 #!/bin/bash
-gunicorn -w 4 server:app
+gunicorn -w 3 server:app
