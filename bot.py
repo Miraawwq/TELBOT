@@ -1,57 +1,54 @@
-import os
-import asyncio
+from telegram.ext import CommandHandler, MessageHandler, ApplicationBuilder, ContextTypes, filters
 from telegram import Update
-from telegram.ext import (
-    ApplicationBuilder, 
-    CommandHandler, 
-    MessageHandler, 
-    ContextTypes, 
-    filters
-)
+import logging
+import os
 
-# Функция обработки команды /start
+# Настройка логирования
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+
+# Функция для загрузки данных из файла
+def load_data(file_path):
+    data = {}
+    with open(file_path, 'r', encoding='utf-8') as file:
+        for line in file:
+            parts = line.strip().split(';')
+            if len(parts) == 3:
+                surname, login, password = parts
+                data[surname.lower()] = (login, password)
+    return data
+
+# Загружаем данные из файла
+DATA_FILE = 'data.txt'
+user_data = load_data(DATA_FILE)
+
+# Команда /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Здравствуйте! Напишите свою фамилию, чтобы получить логин и пароль.")
+    await update.message.reply_text("Привет! Напиши свою фамилию, чтобы получить логин и пароль.")
 
-# Функция обработки сообщений
+# Обработчик сообщений
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    surname = update.message.text.strip()  # Получаем фамилию из сообщения
-    try:
-        # Читаем файл с данными
-        with open("data.txt", "r", encoding="utf-8") as file:
-            lines = file.readlines()
-        # Поиск фамилии в файле
-        for line in lines:
-            stored_surname, login, password = line.strip().split(",")
-            if stored_surname.lower() == surname.lower():
-                await update.message.reply_text(f"Ваши данные:\nЛогин: {login}\nПароль: {password}")
-                return
-        # Если фамилия не найдена
-        await update.message.reply_text("Фамилия не найдена. Проверьте правильность ввода.")
-    except FileNotFoundError:
-        await update.message.reply_text("Ошибка: файл с данными не найден.")
-    except Exception as e:
-        await update.message.reply_text(f"Произошла ошибка: {str(e)}")
+    surname = update.message.text.strip().lower()
+    if surname in user_data:
+        login, password = user_data[surname]
+        await update.message.reply_text(f"Ваш логин: {login}\nВаш пароль: {password}")
+    else:
+        await update.message.reply_text("Извините, ваша фамилия не найдена. Убедитесь, что вы ввели ее правильно.")
 
 # Основная функция для запуска бота
 async def main():
-    # Токен и URL вебхука из переменных окружения
+    # Получаем токен и URL для вебхука из переменных среды
     API_TOKEN = os.getenv("API_TOKEN")
     WEBHOOK_URL = os.getenv("WEBHOOK_URL")
 
     app = ApplicationBuilder().token(API_TOKEN).build()
 
-    # Обработчики
+    # Обработчики команд и сообщений
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT, handle_message))
 
-    # Устанавливаем вебхук
-    await app.bot.set_webhook(url=f"{WEBHOOK_URL}/webhook")
+    # Устанавливаем вебхук с указанием пути
+    await app.bot.set_webhook(url=WEBHOOK_URL + '/webhook')  # Добавляем путь /webhook
 
     print("Бот запущен!")
-    # Запускаем веб-сервер для обработки вебхуков
-    await app.run_webhook(port=8000, listen="0.0.0.0")
-
-# Запуск программы
-if __name__ == "__main__":
-    asyncio.run(main())
+    # Указываем только порт и слушателя
+    await app.run_webhook(port=5000, listen='0.0.0.0')
