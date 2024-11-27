@@ -36,9 +36,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # Основная функция для запуска бота
 async def main():
-    # Получаем токен и URL для вебхука из переменных среды
+    # Получаем токен, URL вебхука и порт из переменных среды
     API_TOKEN = os.getenv("API_TOKEN")
     WEBHOOK_URL = os.getenv("WEBHOOK_URL")
+    PORT = int(os.getenv("PORT", 5000))  # Используем порт из переменной окружения
+
+    if not API_TOKEN or not WEBHOOK_URL:
+        raise ValueError("Необходимо установить переменные окружения API_TOKEN и WEBHOOK_URL")
 
     app = ApplicationBuilder().token(API_TOKEN).build()
 
@@ -46,9 +50,14 @@ async def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT, handle_message))
 
-    # Устанавливаем вебхук с указанием пути
-    await app.bot.set_webhook(url=WEBHOOK_URL + '/webhook')  # Добавляем путь /webhook
+    # Устанавливаем вебхук
+    await app.bot.set_webhook(url=f"{WEBHOOK_URL}/webhook")
 
     print("Бот запущен!")
-    # Указываем только порт и слушателя
-    await app.run_webhook(port=5000, listen='0.0.0.0')
+    # Указываем порт и слушателя для работы вебхука
+    await app.run_webhook(port=PORT, listen="0.0.0.0")
+
+# Запуск
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())
