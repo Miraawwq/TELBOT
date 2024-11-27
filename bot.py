@@ -2,6 +2,7 @@ from telegram.ext import CommandHandler, MessageHandler, ApplicationBuilder, Con
 from telegram import Update
 import logging
 import os
+import asyncio
 
 # Настройка логирования
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -57,7 +58,12 @@ async def main():
     # Указываем порт и слушателя для работы вебхука
     await app.run_webhook(port=PORT, listen="0.0.0.0")
 
-# Запуск
+# Запуск с учетом уже работающего события
 if __name__ == "__main__":
-    import asyncio
-    asyncio.run(main())
+    try:
+        asyncio.get_event_loop().run_until_complete(main())
+    except RuntimeError as e:
+        if str(e) == "This event loop is already running":
+            asyncio.run(main())
+        else:
+            raise
