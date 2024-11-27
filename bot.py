@@ -1,5 +1,6 @@
+from telegram.ext import CommandHandler, MessageHandler, ApplicationBuilder, ContextTypes
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, ApplicationBuilder
+from telegram import filters
 import logging
 import os
 
@@ -22,11 +23,11 @@ DATA_FILE = 'data.txt'
 user_data = load_data(DATA_FILE)
 
 # Команда /start
-async def start(update: Update, context: CallbackContext):
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Привет! Напиши свою фамилию, чтобы получить логин и пароль.")
 
 # Обработчик сообщений
-async def handle_message(update: Update, context: CallbackContext):
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     surname = update.message.text.strip().lower()
     if surname in user_data:
         login, password = user_data[surname]
@@ -44,7 +45,7 @@ async def main():
 
     # Обработчики команд и сообщений
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_message))
+    app.add_handler(MessageHandler(filters.TEXT, handle_message))
 
     # Устанавливаем вебхук
     await app.bot.set_webhook(url=WEBHOOK_URL)
