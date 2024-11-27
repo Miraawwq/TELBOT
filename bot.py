@@ -1,6 +1,6 @@
 import os
 from telegram import Update
-from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters
+from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, ContextTypes, filters
 
 # Файл с данными пользователей
 USER_DATA_FILE = "users.txt"
@@ -17,6 +17,11 @@ def load_users():
     except FileNotFoundError:
         print("Файл users.txt не найден!")
     return users
+
+# Обработчик команды /start
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Ответ на команду /start"""
+    await update.message.reply_text("Enter your last name in English")
 
 # Обработчик текстовых сообщений
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -38,8 +43,9 @@ def main():
 
     app = ApplicationBuilder().token(TOKEN).build()
 
-    # Добавление обработчика для текстовых сообщений
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    # Добавление обработчиков
+    app.add_handler(CommandHandler("start", start))  # Обработчик команды /start
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))  # Обработчик текстовых сообщений
 
     # Запуск с вебхуком
     app.run_webhook(
