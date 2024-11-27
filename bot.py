@@ -1,6 +1,5 @@
-from telegram.ext import CommandHandler, MessageHandler, ApplicationBuilder, ContextTypes
+from telegram.ext import CommandHandler, MessageHandler, ApplicationBuilder, ContextTypes, filters
 from telegram import Update
-from telegram import filters
 import logging
 import os
 
