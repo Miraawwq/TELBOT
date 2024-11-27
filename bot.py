@@ -34,7 +34,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def main():
     TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
     PORT = int(os.getenv("PORT", "8443"))
-    WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://your-app-name.onrender.com")
+    WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://telbot-h594.onrender.com/")
 
     app = ApplicationBuilder().token(TOKEN).build()
 
