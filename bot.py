@@ -2,14 +2,35 @@ import os
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters
 
+# Файл с данными пользователей
+USER_DATA_FILE = "users.txt"
+
+# Чтение данных из файла
+def load_users():
+    """Загрузка пользователей из текстового файла"""
+    users = {}
+    try:
+        with open(USER_DATA_FILE, "r") as file:
+            for line in file:
+                surname, login, password = line.strip().split(":")
+                users[surname.lower()] = (login, password)
+    except FileNotFoundError:
+        print("Файл users.txt не найден!")
+    return users
+
+# Обработчик текстовых сообщений
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Обработка сообщений"""
-    await update.message.reply_text("Ваше сообщение обработано!")
+    """Обработка сообщений с фамилией и отправка логина и пароля"""
+    users = load_users()
+    surname = update.message.text.strip().lower()
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Ответ на команду /start"""
-    await update.message.reply_text("Бот запущен!")
+    if surname in users:
+        login, password = users[surname]
+        await update.message.reply_text(f"Ваш логин: {login}\nВаш пароль: {password}")
+    else:
+        await update.message.reply_text("Фамилия не найдена. Проверьте ввод.")
 
+# Главная функция запуска бота
 def main():
     TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
     PORT = int(os.getenv("PORT", "8443"))
@@ -17,7 +38,7 @@ def main():
 
     app = ApplicationBuilder().token(TOKEN).build()
 
-    # Добавление обработчиков
+    # Добавление обработчика для текстовых сообщений
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
     # Запуск с вебхуком
