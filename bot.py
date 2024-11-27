@@ -52,4 +52,3 @@ async def main():
     print("Бот запущен!")
     # Указываем только порт и слушателя
     await app.run_webhook(port=8000, listen='0.0.0.0')
-
