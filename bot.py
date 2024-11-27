@@ -1,38 +1,41 @@
-import logging
-import asyncio
 from telegram import Update
-from telegram.ext import Application, CommandHandler, CallbackContext
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-# Включение логирования
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
-logger = logging.getLogger(__name__)
+# Файл с данными пользователей
+USER_DATA_FILE = "users.txt"
 
-# Установите ваш токен
-TOKEN = 'YOUR_BOT_TOKEN'
-PORT = 8443  # Порт для вебхуков, вы можете изменить по своему усмотрению
+# Чтение данных из файла
+def load_users():
+    users = {}
+    with open(USER_DATA_FILE, "r") as file:
+        for line in file:
+            surname, login, password = line.strip().split(":")
+            users[surname.lower()] = (login, password)
+    return users
 
-async def start(update: Update, context: CallbackContext):
-    """Отправить сообщение при команде /start."""
-    await update.message.reply_text("Привет! Я ваш Telegram бот.")
+# Главная функция обработки сообщений
+def handle_message(update: Update, context: CallbackContext):
+    users = load_users()
+    surname = update.message.text.strip().lower()
+    
+    if surname in users:
+        login, password = users[surname]
+        update.message.reply_text(f"Ваш логин: {login}\nВаш пароль: {password}")
+    else:
+        update.message.reply_text("Фамилия не найдена. Проверьте ввод.")
 
-async def main():
-    """Основная функция для запуска бота."""
-    # Создание экземпляра бота
-    application = Application.builder().token(TOKEN).build()
+# Запуск бота
+def main():
+    TOKEN = "7538272830:AAFZpUeFmrWTQLdIiKM-bgNDBLBnC9-X2C4"
+    updater = Updater(TOKEN)
+    dispatcher = updater.dispatcher
 
-    # Регистрация обработчиков команд
-    application.add_handler(CommandHandler("start", start))
+    # Обработка текстовых сообщений
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_message))
 
-    # Попытка запустить вебхук
-    await application.run_webhook(port=PORT, listen="0.0.0.0", url_path="/webhook")
+    # Запуск бота
+    updater.start_polling()
+    updater.idle()
 
-# Проверка, если уже работает цикл событий
-loop = asyncio.get_event_loop()
-
-if loop.is_running():
-    # Если цикл уже работает, используем create_task для добавления задачи
-    loop.create_task(main())
-else:
-    # Если цикл не запущен, запускаем его
-    loop.run_until_complete(main())
+if __name__ == "__main__":
+    main()
