@@ -25,15 +25,21 @@ def load_users():
 
 @app.route('/')
 def home():
+    """Главная страница"""
     return render_template('index.html', message=None)
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    surname = request.form['surname'].strip().lower()
+    """Обработка формы"""
+    surname = request.form.get('surname', '').strip().lower()
+    if not surname:
+        return render_template('index.html', message="Please enter a surname.")
+
     users = load_users()
     if surname in users:
         login, password = users[surname]
         message = f"Your login: {login}\nYour password: {password}"
+        print(f"Found user: {surname.capitalize()}, Login: {login}, Password: {password}")
 
         # Отправка сообщения в Teams через Power Automate
         data = {
@@ -41,14 +47,21 @@ def submit():
             "login": login,
             "password": password
         }
-        response = requests.post(POWER_AUTOMATE_URL, json=data)
+        try:
+            response = requests.post(POWER_AUTOMATE_URL, json=data, timeout=10)  # Установлен тайм-аут 10 секунд
+            print(f"Power Automate Response: {response.status_code} - {response.text}")
 
-        # Проверяем успешность отправки
-        if response.status_code == 200:
-            return render_template('index.html', message=f"Message successfully sent to {surname.capitalize()} in Teams!")
-        else:
-            return render_template('index.html', message="Failed to send message to Teams.")
+            # Проверяем успешность отправки
+            if response.status_code == 200:
+                return render_template('index.html', message=f"Message successfully sent to {surname.capitalize()} in Teams!")
+            else:
+                # Если Power Automate вернул ошибку
+                return render_template('index.html', message=f"Failed to send message to Teams. Error: {response.status_code}.")
+        except requests.exceptions.RequestException as e:
+            print(f"Error sending message to Power Automate: {e}")
+            return render_template('index.html', message="An error occurred while trying to send the message. Please try again later.")
     else:
+        # Если фамилия не найдена в базе
         return render_template('index.html', message="Surname not found. Please check the input.")
 
 if __name__ == "__main__":
