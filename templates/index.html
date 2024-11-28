@@ -6,55 +6,50 @@
     <title>Login Bot</title>
     <style>
         body {
-            background: linear-gradient(to bottom, #f0f4f8, #d9e6f2); /* Светло-серый с мягким градиентом */
+            background: linear-gradient(to bottom, #f0f4f8, #d9e6f2);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            color: #333; /* Тёмно-серый текст */
+            color: #333;
         }
-
         .container {
-            background: #ffffff; /* Белый фон */
+            background: #ffffff;
             border-radius: 12px;
             padding: 40px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Мягкая тень */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 90%;
             max-width: 400px;
             text-align: center;
         }
-
         h1 {
-            color: #0078d7; /* Синий акцент */
+            color: #0078d7;
             margin-bottom: 24px;
             font-size: 24px;
             font-weight: 600;
         }
-
         input[type="text"] {
             width: 100%;
             padding: 12px;
             margin: 12px 0;
-            border: 1px solid #ccd6e3; /* Светло-серая рамка */
+            border: 1px solid #ccd6e3;
             border-radius: 6px;
             background-color: #f9fafc;
             color: #333;
             font-size: 16px;
             box-sizing: border-box;
         }
-
         input[type="text"]:focus {
             outline: none;
-            border-color: #0078d7; /* Синий акцент */
+            border-color: #0078d7;
             box-shadow: 0 0 4px rgba(0, 120, 215, 0.5);
         }
-
         button {
             width: 100%;
             padding: 12px;
-            background: #0078d7; /* Синий */
+            background: #0078d7;
             border: none;
             color: white;
             font-size: 16px;
@@ -63,16 +58,19 @@
             font-weight: bold;
             transition: background 0.3s ease, box-shadow 0.3s ease;
         }
-
         button:hover {
-            background: #005a9e; /* Тёмно-синий при наведении */
-            box-shadow: 0 4px 8px rgba(0, 90, 158, 0.4); /* Тень при наведении */
+            background: #005a9e;
+            box-shadow: 0 4px 8px rgba(0, 90, 158, 0.4);
         }
-
         .message {
             margin-top: 20px;
             font-size: 16px;
-            color: #005a9e; /* Тёмно-синий */
+        }
+        .message.success {
+            color: #28a745;
+        }
+        .message.error {
+            color: #dc3545;
         }
     </style>
 </head>
@@ -84,7 +82,9 @@
             <button type="submit">Submit</button>
         </form>
         {% if message %}
-            <p class="message">{{ message }}</p>
+            <p class="message {% if 'successfully' in message %}success{% else %}error{% endif %}">
+                {{ message }}
+            </p>
         {% endif %}
     </div>
 </body>
