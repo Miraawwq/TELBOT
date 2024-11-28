@@ -6,83 +6,81 @@
     <title>Login Bot</title>
     <style>
         body {
-            background: url('{{ url_for('static', filename='image.png') }}') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #f0f4f8, #d9e6f2); /* Светло-серый с мягким градиентом */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            color: #333; /* Тёмно-серый текст */
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.1); /* Полупрозрачный белый */
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.7), 
-                        0 0 25px rgba(255, 0, 255, 0.5); /* Неоновый эффект */
-            border-radius: 10px;
-            padding: 30px;
-            text-align: center;
-            width: 80%;
+            background: #ffffff; /* Белый фон */
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Мягкая тень */
+            width: 90%;
             max-width: 400px;
+            text-align: center;
         }
 
         h1 {
-            color: #ffffff;
-            margin-bottom: 20px;
+            color: #0078d7; /* Синий акцент */
+            margin-bottom: 24px;
             font-size: 24px;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+            font-weight: 600;
         }
 
         input[type="text"] {
-            width: 80%;
+            width: 100%;
             padding: 12px;
-            margin: 10px 0;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
+            margin: 12px 0;
+            border: 1px solid #ccd6e3; /* Светло-серая рамка */
+            border-radius: 6px;
+            background-color: #f9fafc;
+            color: #333;
             font-size: 16px;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+            box-sizing: border-box;
         }
 
         input[type="text"]:focus {
             outline: none;
-            border-color: rgba(255, 0, 255, 0.8);
-            box-shadow: 0 0 12px rgba(255, 0, 255, 0.8);
+            border-color: #0078d7; /* Синий акцент */
+            box-shadow: 0 0 4px rgba(0, 120, 215, 0.5);
         }
 
         button {
-            width: 80%;
+            width: 100%;
             padding: 12px;
-            background-color: rgba(255, 0, 255, 0.8);
+            background: #0078d7; /* Синий */
             border: none;
             color: white;
             font-size: 16px;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
+            font-weight: bold;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
 
         button:hover {
-            background-color: rgba(255, 0, 255, 1);
-            box-shadow: 0 0 20px rgba(255, 0, 255, 1);
+            background: #005a9e; /* Тёмно-синий при наведении */
+            box-shadow: 0 4px 8px rgba(0, 90, 158, 0.4); /* Тень при наведении */
         }
 
         .message {
             margin-top: 20px;
             font-size: 16px;
-            color: #ffff00; /* Желтый цвет для текста сообщения */
-            text-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+            color: #005a9e; /* Тёмно-синий */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Enter your last name in English</h1>
-        <form action="/" method="POST">
-            <input type="text" name="surname" placeholder="Enter surname" required>
+        <h1>Enter Your Last Name</h1>
+        <form action="/submit" method="POST">
+            <input type="text" name="surname" placeholder="Enter your surname" required>
             <button type="submit">Submit</button>
         </form>
         {% if message %}
