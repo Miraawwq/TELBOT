@@ -6,28 +6,31 @@
     <title>Login Bot</title>
     <style>
         body {
-            background-color: #3b0a45; /* Фиолетовый фон */
-            color: white;
+            background: url('image.png') no-repeat center center fixed;
+            background-size: cover;
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            color: white;
         }
 
         .container {
-            background-color: #6a1b9a; /* Темный фиолетовый для контейнера */
+            background: rgba(255, 255, 255, 0.2); /* Прозрачный белый */
             border-radius: 10px;
             padding: 30px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 0px 20px 5px rgba(255, 255, 255, 0.6); /* Неоновое свечение */
             width: 80%;
             max-width: 400px;
             text-align: center;
+            backdrop-filter: blur(10px); /* Размытие фона */
         }
 
         h1 {
-            color: #ffffff;
+            color: white;
+            text-shadow: 0 0 10px #fff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
             margin-bottom: 20px;
         }
 
@@ -35,37 +38,42 @@
             width: 80%;
             padding: 12px;
             margin: 10px 0;
-            border: 2px solid #d1c4e9;
+            border: 2px solid #ff00ff;
             border-radius: 5px;
-            background-color: #4a148c;
+            background-color: rgba(0, 0, 0, 0.5);
             color: white;
             font-size: 16px;
+            text-shadow: 0 0 5px #ff00ff;
         }
 
         input[type="text"]:focus {
             outline: none;
-            border-color: #d1c4e9;
+            border-color: #ff00ff;
         }
 
         button {
             width: 80%;
             padding: 12px;
-            background-color: #9c27b0;
+            background: rgba(255, 0, 255, 0.8);
             border: none;
             color: white;
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
+            text-shadow: 0 0 5px white;
+            transition: all 0.3s ease;
         }
 
         button:hover {
-            background-color: #7b1fa2;
+            background: rgba(255, 0, 255, 1);
+            box-shadow: 0 0 20px #ff00ff;
         }
 
         .message {
             margin-top: 20px;
             font-size: 16px;
-            color: #ffeb3b; /* Желтый цвет для текста сообщения */
+            color: yellow;
+            text-shadow: 0 0 5px yellow;
         }
     </style>
 </head>
