@@ -6,81 +6,82 @@
     <title>Login Bot</title>
     <style>
         body {
-            background: url('image.png') no-repeat center center fixed;
+            background: url('{{ url_for('static', filename='image.png') }}') no-repeat center center fixed;
             background-size: cover;
+            color: white;
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            color: white;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.2); /* Прозрачный белый */
+            background: rgba(255, 255, 255, 0.1); /* Полупрозрачный белый */
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.7), 
+                        0 0 25px rgba(255, 0, 255, 0.5); /* Неоновый эффект */
             border-radius: 10px;
             padding: 30px;
-            box-shadow: 0px 0px 20px 5px rgba(255, 255, 255, 0.6); /* Неоновое свечение */
+            text-align: center;
             width: 80%;
             max-width: 400px;
-            text-align: center;
-            backdrop-filter: blur(10px); /* Размытие фона */
         }
 
         h1 {
-            color: white;
-            text-shadow: 0 0 10px #fff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+            color: #ffffff;
             margin-bottom: 20px;
+            font-size: 24px;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
         }
 
         input[type="text"] {
             width: 80%;
             padding: 12px;
             margin: 10px 0;
-            border: 2px solid #ff00ff;
+            border: 2px solid rgba(255, 255, 255, 0.5);
             border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(255, 255, 255, 0.1);
             color: white;
             font-size: 16px;
-            text-shadow: 0 0 5px #ff00ff;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
         }
 
         input[type="text"]:focus {
             outline: none;
-            border-color: #ff00ff;
+            border-color: rgba(255, 0, 255, 0.8);
+            box-shadow: 0 0 12px rgba(255, 0, 255, 0.8);
         }
 
         button {
             width: 80%;
             padding: 12px;
-            background: rgba(255, 0, 255, 0.8);
+            background-color: rgba(255, 0, 255, 0.8);
             border: none;
             color: white;
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
-            text-shadow: 0 0 5px white;
-            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
         }
 
         button:hover {
-            background: rgba(255, 0, 255, 1);
-            box-shadow: 0 0 20px #ff00ff;
+            background-color: rgba(255, 0, 255, 1);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 1);
         }
 
         .message {
             margin-top: 20px;
             font-size: 16px;
-            color: yellow;
-            text-shadow: 0 0 5px yellow;
+            color: #ffff00; /* Желтый цвет для текста сообщения */
+            text-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Enter your last name in English</h1>
-        <form action="/submit" method="POST">
+        <form action="/" method="POST">
             <input type="text" name="surname" placeholder="Enter surname" required>
             <button type="submit">Submit</button>
         </form>
