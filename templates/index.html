@@ -21,45 +21,22 @@
             margin-bottom: 10px;
         }
 
-        .controls {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        select, button {
-            padding: 10px;
-            font-size: 18px;
-            margin: 5px;
-            border: none;
-            border-radius: 5px;
-            background: #3e3e5e;
-            color: white;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        select:focus, button:hover {
-            background: #5e5e8e;
-        }
-
         #board {
             display: grid;
-            grid-template-columns: repeat(8, 80px);
-            grid-template-rows: repeat(8, 80px);
+            grid-template-columns: repeat(8, 50px);
+            grid-template-rows: repeat(8, 50px);
             gap: 1px;
             background: black;
             border: 3px solid #3e3e5e;
         }
 
         .cell {
-            width: 80px;
-            height: 80px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            font-size: 20px;
             font-weight: bold;
             user-select: none;
         }
@@ -83,16 +60,6 @@
 </head>
 <body>
     <h1>Chess Game</h1>
-    <div class="controls">
-        <label for="difficulty">Select Difficulty:</label>
-        <select id="difficulty">
-            <option value="easy">Easy</option>
-            <option value="medium" selected>Medium</option>
-            <option value="hard">Hard</option>
-        </select>
-        <button onclick="startGame()">Start Game</button>
-    </div>
-
     <div id="board"></div>
 
     <script>
@@ -100,6 +67,7 @@
         let board = [];
         let currentTurn = 'white';
         let gameActive = false;
+        let selectedPiece = null;
 
         function createBoard() {
             board = [];
@@ -125,8 +93,6 @@
         }
 
         function startGame() {
-            const difficulty = document.getElementById('difficulty').value;
-            alert(`Starting a game with difficulty: ${difficulty}`);
             createBoard();
             initializePieces();
             currentTurn = 'white';
@@ -138,38 +104,73 @@
             const blackPieces = ['\u265C', '\u265E', '\u265D', '\u265B', '\u265A', '\u265D', '\u265E', '\u265C'];
 
             for (let i = 0; i < 8; i++) {
-                document.querySelector(`[data-row='1'][data-col='${i}']`).innerText = '\u2659';
-                document.querySelector(`[data-row='1'][data-col='${i}']`).classList.add('white-piece');
-
-                document.querySelector(`[data-row='6'][data-col='${i}']`).innerText = '\u265F';
-                document.querySelector(`[data-row='6'][data-col='${i}']`).classList.add('black-piece');
-
-                document.querySelector(`[data-row='0'][data-col='${i}']`).innerText = whitePieces[i];
-                document.querySelector(`[data-row='0'][data-col='${i}']`).classList.add('white-piece');
-
-                document.querySelector(`[data-row='7'][data-col='${i}']`).innerText = blackPieces[i];
-                document.querySelector(`[data-row='7'][data-col='${i}']`).classList.add('black-piece');
+                placePiece(0, i, whitePieces[i], 'white');
+                placePiece(1, i, '\u2659', 'white');
+                placePiece(6, i, '\u265F', 'black');
+                placePiece(7, i, blackPieces[i], 'black');
             }
+        }
+
+        function placePiece(row, col, piece, color) {
+            const cell = document.querySelector(`[data-row='${row}'][data-col='${col}']`);
+            cell.innerText = piece;
+            cell.classList.add(color === 'white' ? 'white-piece' : 'black-piece');
+            board[row][col] = { piece, color };
         }
 
         function handleClick(row, col) {
             if (!gameActive) return;
+
             const cell = document.querySelector(`[data-row='${row}'][data-col='${col}']`);
-            const piece = cell.innerText;
-            if (currentTurn === 'white' && cell.classList.contains('white-piece')) {
-                alert(`Selected white piece: ${piece}`);
+            const piece = board[row][col];
+
+            if (selectedPiece) {
+                // Move the selected piece
+                movePiece(row, col);
+                selectedPiece = null;
                 currentTurn = 'black';
                 setTimeout(aiMove, 1000); // AI делает ход
+            } else if (piece && piece.color === currentTurn) {
+                selectedPiece = { row, col, piece };
+                cell.style.background = 'yellow';
             }
         }
 
-        function aiMove() {
-            if (currentTurn !== 'black' || !gameActive) return;
-            alert('AI is making a move...');
-            currentTurn = 'white';
+        function movePiece(row, col) {
+            const { row: fromRow, col: fromCol, piece } = selectedPiece;
+            board[fromRow][fromCol] = null;
+
+            const fromCell = document.querySelector(`[data-row='${fromRow}'][data-col='${fromCol}']`);
+            fromCell.innerText = '';
+            fromCell.classList.remove('white-piece', 'black-piece');
+
+            placePiece(row, col, piece.piece, piece.color);
         }
 
-        createBoard();
+        function aiMove() {
+            if (!gameActive || currentTurn !== 'black') return;
+
+            const moves = [];
+            for (let i = 0; i < 8; i++) {
+                for (let j = 0; j < 8; j++) {
+                    const piece = board[i][j];
+                    if (piece && piece.color === 'black') {
+                        moves.push({ fromRow: i, fromCol: j });
+                    }
+                }
+            }
+
+            const move = moves[Math.floor(Math.random() * moves.length)];
+            if (move) {
+                const { fromRow, fromCol } = move;
+                const targetRow = fromRow + 1 < 8 ? fromRow + 1 : fromRow - 1;
+                const targetCol = fromCol + 1 < 8 ? fromCol + 1 : fromCol - 1;
+                movePiece(targetRow, targetCol);
+                currentTurn = 'white';
+            }
+        }
+
+        startGame();
     </script>
 </body>
 </html>
