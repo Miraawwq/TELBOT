@@ -1,204 +1,185 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chess Game</title>
+    <title>Explore Solana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1e1e2f, #4e4e7b);
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
             color: white;
+            background: linear-gradient(135deg, #1a1a40, #2a2a72);
+            overflow-x: hidden;
+        }
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.7);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        header h1 {
+            font-size: 3rem;
+            margin: 0;
+            color: #00d4ff;
+            animation: glow 2s infinite alternate;
+        }
+        header p {
+            font-size: 1.2rem;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #00d4ff, 0 0 10px #00d4ff, 0 0 15px #00d4ff;
+            }
+            to {
+                text-shadow: 0 0 20px #00d4ff, 0 0 30px #00d4ff, 0 0 40px #00d4ff;
+            }
+        }
+        section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .hero {
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            margin: 0;
+            align-items: center;
+            background-image: url('Solana.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
         }
-
-        #board {
-            display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            grid-template-rows: repeat(8, 1fr);
-            gap: 1px;
-            width: 100%;
-            max-width: 500px;
-            aspect-ratio: 1;
-            background: black;
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            color: #fff;
         }
-
-        .cell {
+        .hero p {
+            font-size: 1.5rem;
+            color: #ddd;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 30px;
+            font-size: 1.2rem;
+            color: #000;
+            background: #00d4ff;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #00b0d4;
+        }
+        .fade-in {
+            animation: fadeIn 2s;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .technologies, .advantages {
+            background: rgba(0, 0, 0, 0.5);
+            margin: 20px auto;
+            border-radius: 15px;
+            padding: 30px;
+        }
+        .advantages ul {
+            list-style: none;
+            padding: 0;
+        }
+        .advantages li {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            animation: fadeIn 1.5s;
+        }
+        .gallery {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: calc(1.5vmin + 1rem);
-            font-weight: bold;
-            user-select: none;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 20px;
         }
-
-        .cell:nth-child(even) {
-            background: #d3d3d3;
+        .gallery img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
-
-        .cell:nth-child(odd) {
-            background: #7b7b7b;
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            color: #aaa;
         }
-
-        .highlight {
-            background: rgba(255, 255, 0, 0.5);
-        }
-
-        .selected {
-            background: rgba(0, 255, 0, 0.5);
-        }
-
-        .white-piece {
-            color: white;
-        }
-
-        .black-piece {
-            color: black;
-        }
-
-        .cell > span {
-            pointer-events: none;
+        footer a {
+            color: #00d4ff;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <h1>Chess Game</h1>
-    <div id="board"></div>
+    <header>
+        <h1>Welcome to the World of Solana</h1>
+        <p>The fastest blockchain in the crypto world</p>
+    </header>
 
-    <script>
-        const boardElement = document.getElementById('board');
-        let board = [];
-        let currentTurn = 'black'; // Игрок начинает за черных
-        let selectedCell = null;
+    <div class="hero">
+        <h1>Discover the Power of Solana</h1>
+        <p>Fast, secure, and scalable blockchain technology</p>
+        <a href="#about" class="btn">Learn More</a>
+    </div>
 
-        function createBoard() {
-            board = [];
-            boardElement.innerHTML = '';
-            for (let i = 0; i < 8; i++) {
-                const row = [];
-                for (let j = 0; j < 8; j++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'cell';
-                    cell.dataset.row = i;
-                    cell.dataset.col = j;
-                    cell.onclick = () => handleClick(i, j);
-                    if ((i + j) % 2 === 0) {
-                        cell.style.background = '#f0d9b5';
-                    } else {
-                        cell.style.background = '#b58863';
-                    }
-                    boardElement.appendChild(cell);
-                    row.push(null);
-                }
-                board.push(row);
-            }
-        }
+    <section id="about">
+        <h2>About Solana</h2>
+        <p>Solana is a high-performance blockchain supporting builders around the world creating crypto apps that scale today.</p>
+    </section>
 
-        function initializePieces() {
-            const whitePieces = ['\u2656', '\u2658', '\u2657', '\u2655', '\u2654', '\u2657', '\u2658', '\u2656'];
-            const blackPieces = ['\u265C', '\u265E', '\u265D', '\u265B', '\u265A', '\u265D', '\u265E', '\u265C'];
+    <section id="technologies" class="technologies">
+        <h2>Technologies Behind Solana</h2>
+        <p>Solana leverages cutting-edge technology like Proof-of-History, ensuring unprecedented speed and reliability.</p>
+    </section>
 
-            for (let i = 0; i < 8; i++) {
-                setPiece(1, i, '\u265F', 'black'); // Черные пешки
-                setPiece(6, i, '\u2659', 'white'); // Белые пешки
+    <section id="advantages" class="advantages">
+        <h2>Advantages of Solana</h2>
+        <ul>
+            <li>Unmatched transaction speeds</li>
+            <li>Low transaction fees</li>
+            <li>Decentralized and secure</li>
+            <li>Robust ecosystem for developers</li>
+        </ul>
+    </section>
 
-                setPiece(0, i, blackPieces[i], 'black');
-                setPiece(7, i, whitePieces[i], 'white');
-            }
-        }
+    <section id="gallery" class="gallery">
+        <h2>Gallery</h2>
+        <p>Explore visuals from the Solana ecosystem:</p>
+        <img src="path-to-image1.jpg" alt="Image 1">
+        <img src="path-to-image2.jpg" alt="Image 2">
+        <img src="path-to-image3.jpg" alt="Image 3">
+    </section>
 
-        function setPiece(row, col, piece, color) {
-            const cell = document.querySelector(`[data-row='${row}'][data-col='${col}']`);
-            cell.innerHTML = `<span>${piece}</span>`;
-            cell.classList.add(`${color}-piece`);
-            board[row][col] = { piece, color };
-        }
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required><br>
+            <input type="email" placeholder="Your Email" required><br>
+            <textarea placeholder="Your Message"></textarea><br>
+            <button type="submit" class="btn">Send</button>
+        </form>
+    </section>
 
-        function handleClick(row, col) {
-            const cell = document.querySelector(`[data-row='${row}'][data-col='${col}']`);
-            const pieceInfo = board[row][col];
-
-            clearHighlights();
-
-            if (selectedCell) {
-                const validMoves = getValidMoves(selectedCell.row, selectedCell.col);
-                const isValidMove = validMoves.some(move => move.row === row && move.col === col);
-
-                if (isValidMove) {
-                    makeMove(selectedCell.row, selectedCell.col, row, col);
-                    currentTurn = currentTurn === 'white' ? 'black' : 'white';
-                    selectedCell = null;
-
-                    if (currentTurn === 'white') {
-                        setTimeout(aiMove, 1000);
-                    }
-                } else {
-                    selectedCell = null;
-                }
-            } else if (pieceInfo && pieceInfo.color === currentTurn) {
-                selectedCell = { row, col };
-                cell.classList.add('selected');
-                const validMoves = getValidMoves(row, col);
-                validMoves.forEach(move => {
-                    const targetCell = document.querySelector(`[data-row='${move.row}'][data-col='${move.col}']`);
-                    targetCell.classList.add('highlight');
-                });
-            }
-        }
-
-        function makeMove(fromRow, fromCol, toRow, toCol) {
-            const pieceInfo = board[fromRow][fromCol];
-            const targetCell = document.querySelector(`[data-row='${toRow}'][data-col='${toCol}']`);
-            const sourceCell = document.querySelector(`[data-row='${fromRow}'][data-col='${fromCol}']`);
-
-            targetCell.innerHTML = sourceCell.innerHTML;
-            targetCell.className = sourceCell.className;
-            sourceCell.innerHTML = '';
-            sourceCell.className = 'cell';
-
-            board[toRow][toCol] = pieceInfo;
-            board[fromRow][fromCol] = null;
-        }
-
-        function clearHighlights() {
-            document.querySelectorAll('.highlight').forEach(cell => cell.classList.remove('highlight'));
-            document.querySelectorAll('.selected').forEach(cell => cell.classList.remove('selected'));
-        }
-
-        function getValidMoves(row, col) {
-            const pieceInfo = board[row][col];
-            if (!pieceInfo) return [];
-
-            const moves = [];
-            const directions = {
-                pawn: [[1, 0], [-1, 0]],
-                rook: [
-                    [1, 0], [-1, 0], [0, 1], [0, -1]
-                ],
-                // другие фигуры добавить...
-            };
-
-            // пример только для ладьи
-            for (const [dx, dy] of directions.rook) {
-                let x = row + dx;
-                let y = col + dy;
-                while (x >= 0 && y >= 0 && x < 8 && y < 8) {
-                    if (!board[x][y]) moves.push({ row: x, col: y });
-                    else break; // встречено препятствие
-                    x += dx;
-                    y += dy;
-                }
-            }
-            return moves;
-        }
-
-        createBoard();
-        initializePieces();
-    </script>
+    <footer>
+        <p>&copy; 2024 Explore Solana | <a href="#">Privacy Policy</a></p>
+    </footer>
 </body>
 </html>
