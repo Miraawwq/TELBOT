@@ -13,7 +13,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
         }
 
@@ -30,7 +30,7 @@
 
         select, button {
             padding: 10px;
-            font-size: 16px;
+            font-size: 18px;
             margin: 5px;
             border: none;
             border-radius: 5px;
@@ -46,21 +46,22 @@
 
         #board {
             display: grid;
-            grid-template-columns: repeat(8, 60px);
-            grid-template-rows: repeat(8, 60px);
+            grid-template-columns: repeat(8, 80px);
+            grid-template-rows: repeat(8, 80px);
             gap: 1px;
             background: black;
             border: 3px solid #3e3e5e;
         }
 
         .cell {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 40px;
             font-weight: bold;
+            user-select: none;
         }
 
         .cell:nth-child(even) {
@@ -86,7 +87,7 @@
         <label for="difficulty">Select Difficulty:</label>
         <select id="difficulty">
             <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
+            <option value="medium" selected>Medium</option>
             <option value="hard">Hard</option>
         </select>
         <button onclick="startGame()">Start Game</button>
@@ -97,6 +98,8 @@
     <script>
         const boardElement = document.getElementById('board');
         let board = [];
+        let currentTurn = 'white';
+        let gameActive = false;
 
         function createBoard() {
             board = [];
@@ -108,6 +111,7 @@
                     cell.className = 'cell';
                     cell.dataset.row = i;
                     cell.dataset.col = j;
+                    cell.onclick = () => handleClick(i, j);
                     if ((i + j) % 2 === 0) {
                         cell.style.background = '#f0d9b5';
                     } else {
@@ -125,6 +129,8 @@
             alert(`Starting a game with difficulty: ${difficulty}`);
             createBoard();
             initializePieces();
+            currentTurn = 'white';
+            gameActive = true;
         }
 
         function initializePieces() {
@@ -144,6 +150,23 @@
                 document.querySelector(`[data-row='7'][data-col='${i}']`).innerText = blackPieces[i];
                 document.querySelector(`[data-row='7'][data-col='${i}']`).classList.add('black-piece');
             }
+        }
+
+        function handleClick(row, col) {
+            if (!gameActive) return;
+            const cell = document.querySelector(`[data-row='${row}'][data-col='${col}']`);
+            const piece = cell.innerText;
+            if (currentTurn === 'white' && cell.classList.contains('white-piece')) {
+                alert(`Selected white piece: ${piece}`);
+                currentTurn = 'black';
+                setTimeout(aiMove, 1000); // AI делает ход
+            }
+        }
+
+        function aiMove() {
+            if (currentTurn !== 'black' || !gameActive) return;
+            alert('AI is making a move...');
+            currentTurn = 'white';
         }
 
         createBoard();
