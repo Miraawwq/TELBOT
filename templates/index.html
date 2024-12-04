@@ -19,20 +19,20 @@
 
         #board {
             display: grid;
-            grid-template-columns: repeat(8, 60px);
-            grid-template-rows: repeat(8, 60px);
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
             gap: 1px;
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1;
             background: black;
-            border: 3px solid #3e3e5e;
         }
 
         .cell {
-            width: 60px;
-            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: calc(1.5vmin + 1rem);
             font-weight: bold;
             user-select: none;
         }
@@ -60,6 +60,10 @@
         .black-piece {
             color: black;
         }
+
+        .cell > span {
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -69,7 +73,7 @@
     <script>
         const boardElement = document.getElementById('board');
         let board = [];
-        let currentTurn = 'white';
+        let currentTurn = 'black'; // Игрок начинает за черных
         let selectedCell = null;
 
         function createBoard() {
@@ -100,17 +104,17 @@
             const blackPieces = ['\u265C', '\u265E', '\u265D', '\u265B', '\u265A', '\u265D', '\u265E', '\u265C'];
 
             for (let i = 0; i < 8; i++) {
-                setPiece(1, i, '\u2659', 'white');
-                setPiece(6, i, '\u265F', 'black');
+                setPiece(1, i, '\u265F', 'black'); // Черные пешки
+                setPiece(6, i, '\u2659', 'white'); // Белые пешки
 
-                setPiece(0, i, whitePieces[i], 'white');
-                setPiece(7, i, blackPieces[i], 'black');
+                setPiece(0, i, blackPieces[i], 'black');
+                setPiece(7, i, whitePieces[i], 'white');
             }
         }
 
         function setPiece(row, col, piece, color) {
             const cell = document.querySelector(`[data-row='${row}'][data-col='${col}']`);
-            cell.innerText = piece;
+            cell.innerHTML = `<span>${piece}</span>`;
             cell.classList.add(`${color}-piece`);
             board[row][col] = { piece, color };
         }
@@ -119,11 +123,9 @@
             const cell = document.querySelector(`[data-row='${row}'][data-col='${col}']`);
             const pieceInfo = board[row][col];
 
-            // Очистить выделения
             clearHighlights();
 
             if (selectedCell) {
-                // Если выбрана фигура, проверить возможность хода
                 const validMoves = getValidMoves(selectedCell.row, selectedCell.col);
                 const isValidMove = validMoves.some(move => move.row === row && move.col === col);
 
@@ -132,14 +134,13 @@
                     currentTurn = currentTurn === 'white' ? 'black' : 'white';
                     selectedCell = null;
 
-                    if (currentTurn === 'black') {
+                    if (currentTurn === 'white') {
                         setTimeout(aiMove, 1000);
                     }
                 } else {
-                    selectedCell = null; // Отменить выбор, если ход невозможен
+                    selectedCell = null;
                 }
             } else if (pieceInfo && pieceInfo.color === currentTurn) {
-                // Если фигура выбрана, показать возможные ходы
                 selectedCell = { row, col };
                 cell.classList.add('selected');
                 const validMoves = getValidMoves(row, col);
@@ -155,9 +156,9 @@
             const targetCell = document.querySelector(`[data-row='${toRow}'][data-col='${toCol}']`);
             const sourceCell = document.querySelector(`[data-row='${fromRow}'][data-col='${fromCol}']`);
 
-            targetCell.innerText = sourceCell.innerText;
+            targetCell.innerHTML = sourceCell.innerHTML;
             targetCell.className = sourceCell.className;
-            sourceCell.innerText = '';
+            sourceCell.innerHTML = '';
             sourceCell.className = 'cell';
 
             board[toRow][toCol] = pieceInfo;
@@ -172,31 +173,28 @@
         function getValidMoves(row, col) {
             const pieceInfo = board[row][col];
             if (!pieceInfo) return [];
-            const moves = [];
-            // Упрощенная логика для пешек
-            if (pieceInfo.piece === '\u2659') { // Белая пешка
-                if (!board[row + 1]?.[col]) moves.push({ row: row + 1, col });
-            } else if (pieceInfo.piece === '\u265F') { // Черная пешка
-                if (!board[row - 1]?.[col]) moves.push({ row: row - 1, col });
-            }
-            return moves;
-        }
 
-        function aiMove() {
-            const allMoves = [];
-            for (let i = 0; i < 8; i++) {
-                for (let j = 0; j < 8; j++) {
-                    if (board[i][j]?.color === 'black') {
-                        const moves = getValidMoves(i, j);
-                        moves.forEach(move => allMoves.push({ fromRow: i, fromCol: j, ...move }));
-                    }
+            const moves = [];
+            const directions = {
+                pawn: [[1, 0], [-1, 0]],
+                rook: [
+                    [1, 0], [-1, 0], [0, 1], [0, -1]
+                ],
+                // другие фигуры добавить...
+            };
+
+            // пример только для ладьи
+            for (const [dx, dy] of directions.rook) {
+                let x = row + dx;
+                let y = col + dy;
+                while (x >= 0 && y >= 0 && x < 8 && y < 8) {
+                    if (!board[x][y]) moves.push({ row: x, col: y });
+                    else break; // встречено препятствие
+                    x += dx;
+                    y += dy;
                 }
             }
-            if (allMoves.length > 0) {
-                const move = allMoves[Math.floor(Math.random() * allMoves.length)];
-                makeMove(move.fromRow, move.fromCol, move.row, move.col);
-                currentTurn = 'white';
-            }
+            return moves;
         }
 
         createBoard();
