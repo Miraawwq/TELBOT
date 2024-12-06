@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore Solana</title>
+    <title>Home - BIM</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -133,23 +133,62 @@
                 opacity: 1;
             }
         }
-        .technologies, .advantages {
-            background: rgba(0, 0, 0, 0.5);
-            margin: 20px auto;
-            border-radius: 15px;
-            padding: 30px;
-        }
-        .advantages ul {
-            list-style: none;
-            padding: 0;
-        }
-        .advantages li {
-            margin: 10px 0;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            animation: fadeIn 1.5s;
-        }
+        .advantages {
+    background: rgba(0, 0, 0, 0.5);
+    margin: 20px auto;
+    border-radius: 15px;
+    padding: 30px;
+    width: 80%; /* Ограничиваем ширину */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.advantages h2 {
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.advantages .left, .advantages .right {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.advantages .left li, .advantages .right li {
+    list-style: none;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.advantages .left li::after, .advantages .right li::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #00d4ff;
+    margin-top: 5px;
+}
+
+/* Добавление анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.advantages li {
+    animation: fadeIn 1.5s ease;
+}
         .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -193,29 +232,123 @@
             color: #00d4ff;
             text-decoration: none;
         }
-        #stats {
-        background: rgba(0, 0, 0, 0.7);
-        padding: 50px 20px;
-        text-align: center;
-        border-radius: 15px;
-        margin: 30px auto;
-    }
-    .stats-container {
-        display: flex;
-        justify-content: center;
-        gap: 50px;
-    }
-    .stat h3 {
-        font-size: 3rem;
-        color: #00d4ff;
-    }
+        .stats-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.stat {
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    width: 200px; /* Ограничиваем ширину блока */
+    flex-grow: 1; /* Для адаптивности */
+    min-width: 180px; /* Минимальная ширина блока */
+}
+
+.stat h3 {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.stat p {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+#contact {
+    background: rgba(0, 0, 0, 0.5); /* Прозрачный черный фон */
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Легкая тень */
+    width: 100%;
+    max-width: 800px; /* Увеличиваем ширину формы */
+    margin: 50px auto; /* Центрируем */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+#contact h2 {
+    font-size: 1.8rem; /* Уменьшаем размер заголовка */
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+form {
+    display: flex;
+    flex-direction: column; /* Вертикальное расположение для формы */
+    gap: 20px; /* Отступы между элементами */
+    width: 60%; /* Форме выделено 60% доступного пространства */
+}
+
+input, textarea {
+    width: 100%; /* Поля ввода занимают всю ширину */
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон */
+    transition: all 0.3s ease-in-out;
+}
+
+input:focus, textarea:focus {
+    border-color: #2575fc;
+    box-shadow: 0 0 8px rgba(37, 117, 252, 0.5); /* Синяя тень при фокусе */
+}
+
+textarea {
+    height: 100px;
+    resize: none;
+}
+
+button {
+    padding: 12px 25px;
+    background-color: #2575fc;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    letter-spacing: 1px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #6a11cb;
+    transform: translateY(-5px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+#contact img {
+    width: 300px; /* Размер логотипа */
+    height: 150px;
+    object-fit: contain; /* Сохраняет пропорции логотипа */
+}
+
+
     </style>
 </head>
 <body>
     <header class="navbar">
     <div class="logo">
         <img src="{{ url_for('static', filename='logo.jpg') }}" alt="VRX Logo">
-        <span>SOLANA LTD</span>
+        <span>BIM Leades LTD</span>
     </div>
     <nav class="nav-links">
         <ul>
@@ -229,14 +362,14 @@
 </header>
 
     <div class="hero">
-        <h1>Discover the Power of Solana</h1>
-        <p>Fast, secure, and scalable blockchain technology</p>
+        <h1>Dream up. Refine. Implement.</h1>
+        <p>Transform the construction and design industry for greater comfort worldwide.</p>
         <a href="#about" class="btn">Learn More</a>
     </div>
 
     <section id="about">
-        <h2>About Solana</h2>
-        <p>Solana is a high-performance blockchain supporting builders around the world creating crypto apps that scale today.</p>
+        <h2>BIM Leades LTD</h2>
+        <p>We are progressive company that offers innovative solutions in the field of Building information modeling, ensures effective process management on Revit, and is also engaged in continuous training of employees and popularization of BIM technology on a global scale.</p>
     </section>
 
     <section id="technologies" class="technologies">
@@ -244,77 +377,128 @@
         <p>Solana leverages cutting-edge technology like Proof-of-History, ensuring unprecedented speed and reliability.</p>
     </section>
 
-    <section id="advantages" class="advantages">
-        <h2>Advantages of Solana</h2>
+   <section id="advantages" class="advantages">
+    <h2>Industries of BIM Leaders LTD</h2>
+    <div class="left">
         <ul>
-            <li>Unmatched transaction speeds</li>
-            <li>Low transaction fees</li>
-            <li>Decentralized and secure</li>
-            <li>Robust ecosystem for developers</li>
+            <li>HEALTHCARE</li>
+            <li>EDUCATION</li>
+            <li>GOVERNMENT</li>
+            <li>MULTIFAMILY HOUSING</li>
         </ul>
-    </section>
+    </div>
+    <div class="right">
+        <ul>
+            <li>CUSTOM HOMES</li>
+            <li>COMMERCIAL</li>
+            <li>INFRASTRUCTURE</li>
+            <li>OIL AND GAS</li>
+        </ul>
+    </div>
+</section>
 
     <section id="gallery" class="gallery">
     <div class="gallery-item">
-        <img src="{{ url_for('static', filename='sola2.jpg') }}" alt="Image 1">
+        <img src="{{ url_for('static', filename='Sola2.jpg') }}" alt="Image 1">
         <h3>“NO BORDERS” CAMPAIGN</h3>
-        <p>Our company has become an effective platform for cooperation between the most qualified specialists from different countries.</p>
+        <p>Our company has become an effective platform for cooperation between the most qualified specialists from different countries. Thanks to BIM, we provide assistance to clients from anywhere in the world</p>
     </div>
     <div class="gallery-item">
         <img src="{{ url_for('static', filename='Sola3.jpg') }}" alt="Image 2">
         <h3>WORKING IN BIM MINIMIZING THE RISK OF ERRORS</h3>
-        <p>At all stages of design, construction, and operation, all specialists work with the same software product.</p>
+        <p>At all stages of design, construction and operation, all specialists work with the same software product, closely interacting with each other</p>
     </div>
     <div class="gallery-item">
         <img src="{{ url_for('static', filename='Sola4.jpg') }}" alt="Image 3">
         <h3>HIGH-LEVEL MANAGEMENT</h3>
-        <p>With the help of BIM, we turn all volumetric construction processes into a single and understandable system.</p>
+        <p>With the help of BIM, we turn all volumetric construction processes (architecture, civil engineering, MEP, oil and gas industry) into a single and understandable system</p>
     </div>
     <div class="gallery-item">
         <img src="{{ url_for('static', filename='Sola5.jpg') }}" alt="Image 4">
         <h3>INTERNATIONAL STANDARD SERVICES</h3>
-        <p>We are one of the first and largest companies that train and create project teams based on design requirements.</p>
+        <p>We are one of the first and largest company that trains and creates project teams based on the requirements of design offices in Israel</p>
     </div>
 </section>
 
     <section id="contact">
+    <form>
         <h2>Contact Us</h2>
-        <form>
-            <input type="text" placeholder="Your Name" required><br>
-            <input type="email" placeholder="Your Email" required><br>
-            <textarea placeholder="Your Message"></textarea><br>
-            <button type="submit" class="btn">Send</button>
-        </form>
-    </section>
+        <input type="text" placeholder="Your Name" required><br>
+        <input type="email" placeholder="Your Email" required><br>
+        <textarea placeholder="Your Message" required></textarea><br>
+        <button type="submit" class="btn">Send</button>
+    </form>
+    <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Image 5">
+</section>
+
 <section id="stats">
     <h2>Live Stats</h2>
-    <div class="stats-container">
-        <div class="stat">
-            <h3 id="transactions">0</h3>
-            <p>Transactions Per Second</p>
-        </div>
-        <div class="stat">
-            <h3 id="validators">0</h3>
-            <p>Validators</p>
-        </div>
+<div class="stats-container">
+    <div class="stat">
+        <h3 id="years-in-business">0</h3>
+        <p>Years in business</p>
     </div>
-</section>
-    <script>
-    let tps = document.getElementById("transactions");
-    let validators = document.getElementById("validators");
-    let tpsCount = 0, validatorsCount = 0;
+    <div class="stat">
+        <h3 id="offices">0</h3>
+        <p>Offices</p>
+    </div>
+    <div class="stat">
+        <h3 id="employees">0</h3>
+        <p>Employees</p>
+    </div>
+    <div class="stat">
+        <h3 id="clients">0</h3>
+        <p>Clients working with us for over 10 years</p>
+    </div>
+    <div class="stat">
+        <h3 id="sq-meters">0</h3>
+        <p>Million designed square metres</p>
+    </div>
+    <div class="stat">
+        <h3 id="projects">0</h3>
+        <p>Projects delivered</p>
+    </div>
+</div>
+
+<script>
+    let yearsInBusiness = document.getElementById("years-in-business");
+    let offices = document.getElementById("offices");
+    let employees = document.getElementById("employees");
+    let clients = document.getElementById("clients");
+    let sqMeters = document.getElementById("sq-meters");
+    let projects = document.getElementById("projects");
+
+    let yearsCount = 0, officesCount = 0, employeesCount = 0;
+    let clientsCount = 0, sqMetersCount = 0, projectsCount = 0;
 
     setInterval(() => {
-        if (tpsCount < 65000) {
-            tpsCount += 1000;
-            tps.textContent = tpsCount;
+        if (yearsCount < 10) {
+            yearsCount += 1;
+            yearsInBusiness.textContent = yearsCount;
         }
-        if (validatorsCount < 1700) {
-            validatorsCount += 10;
-            validators.textContent = validatorsCount;
+        if (officesCount < 4) {
+            officesCount += 1;
+            offices.textContent = officesCount;
+        }
+        if (employeesCount < 150) {
+            employeesCount += 5;
+            employees.textContent = employeesCount;
+        }
+        if (clientsCount < 50) {
+            clientsCount += 1;
+            clients.textContent = clientsCount;
+        }
+        if (sqMetersCount < 5.5) {
+            sqMetersCount += 0.1;
+            sqMeters.textContent = sqMetersCount.toFixed(1); // keep one decimal point
+        }
+        if (projectsCount < 3000) {
+            projectsCount += 50;
+            projects.textContent = projectsCount;
         }
     }, 100);
 </script>
+
 
     <section id="map" style="height: 400px; margin: 30px 0;"></section>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
