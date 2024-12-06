@@ -103,17 +103,38 @@
             animation: fadeIn 1.5s;
         }
         .gallery {
-            display: flex;
-            overflow-x: auto;
-            gap: 10px;
-            padding: 20px;
-        }
-        .gallery img {
-            width: 300px;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    background-color: #0a1931;
+    color: #ffffff;
+}
+
+.gallery-item {
+    text-align: center;
+    background-color: #1c2b49;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.gallery-item h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.gallery-item p {
+    font-size: 1em;
+    line-height: 1.5;
+}
         footer {
             background: rgba(0, 0, 0, 0.7);
             padding: 20px 0;
@@ -175,12 +196,27 @@
     </section>
 
     <section id="gallery" class="gallery">
-        <h2>Gallery</h2>
-        <p>Explore visuals from the Solana ecosystem:</p>
-        <img src="{{ url_for('static', filename='sola2.jpg') }}" alt="Image 1">
+    <div class="gallery-item">
+        <img src="{{ url_for('static', filename='Sola2.jpg') }}" alt="Image 1">
+        <h3>“NO BORDERS” CAMPAIGN</h3>
+        <p>Our company has become an effective platform for cooperation between the most qualified specialists from different countries.</p>
+    </div>
+    <div class="gallery-item">
         <img src="{{ url_for('static', filename='Sola3.jpg') }}" alt="Image 2">
+        <h3>WORKING IN BIM MINIMIZING THE RISK OF ERRORS</h3>
+        <p>At all stages of design, construction, and operation, all specialists work with the same software product.</p>
+    </div>
+    <div class="gallery-item">
         <img src="{{ url_for('static', filename='Sola4.jpg') }}" alt="Image 3">
-    </section>
+        <h3>HIGH-LEVEL MANAGEMENT</h3>
+        <p>With the help of BIM, we turn all volumetric construction processes into a single and understandable system.</p>
+    </div>
+    <div class="gallery-item">
+        <img src="{{ url_for('static', filename='Sola5.jpg') }}" alt="Image 4">
+        <h3>INTERNATIONAL STANDARD SERVICES</h3>
+        <p>We are one of the first and largest companies that train and create project teams based on design requirements.</p>
+    </div>
+</section>
 
     <section id="contact">
         <h2>Contact Us</h2>
