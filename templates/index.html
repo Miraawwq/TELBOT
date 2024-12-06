@@ -124,6 +124,22 @@
             color: #00d4ff;
             text-decoration: none;
         }
+        #stats {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 50px 20px;
+        text-align: center;
+        border-radius: 15px;
+        margin: 30px auto;
+    }
+    .stats-container {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+    }
+    .stat h3 {
+        font-size: 3rem;
+        color: #00d4ff;
+    }
     </style>
 </head>
 <body>
@@ -175,7 +191,35 @@
             <button type="submit" class="btn">Send</button>
         </form>
     </section>
+<section id="stats">
+    <h2>Live Stats</h2>
+    <div class="stats-container">
+        <div class="stat">
+            <h3 id="transactions">0</h3>
+            <p>Transactions Per Second</p>
+        </div>
+        <div class="stat">
+            <h3 id="validators">0</h3>
+            <p>Validators</p>
+        </div>
+    </div>
+</section>
+    <script>
+    let tps = document.getElementById("transactions");
+    let validators = document.getElementById("validators");
+    let tpsCount = 0, validatorsCount = 0;
 
+    setInterval(() => {
+        if (tpsCount < 65000) {
+            tpsCount += 1000;
+            tps.textContent = tpsCount;
+        }
+        if (validatorsCount < 1700) {
+            validatorsCount += 10;
+            validators.textContent = validatorsCount;
+        }
+    }, 100);
+</script>
     <footer>
         <p>&copy; 2024 Explore Solana | <a href="#">Privacy Policy</a></p>
     </footer>
