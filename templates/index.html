@@ -348,12 +348,12 @@ button:active {
     <header class="navbar">
     <div class="logo">
         <img src="{{ url_for('static', filename='logo.jpg') }}" alt="VRX Logo">
-        <span>BIM Leades LTD</span>
+        <span>BIM Leaders LTD</span>
     </div>
     <nav class="nav-links">
         <ul>
-            <li><a href="#">HOME</a></li>
-            <li><a href="#">ABOUT US</a></li>
+            <li><a href="index.html"class="active">HOME</a></li>
+              <li><a href="career.html" class="active">CAREER</a></li>
             <li><a href="#">SOLUTIONS</a></li>
             <li><a href="#">RESOURCES</a></li>
             <li><a href="#">CONTACT</a></li>
@@ -373,8 +373,8 @@ button:active {
     </section>
 
     <section id="technologies" class="technologies">
-        <h2>Our mission</h2>
-        <p>Transform the construction and design industry by making it more comfortable for customers, employees and people around the world.</p>
+        <h2>Technologies Behind Solana</h2>
+        <p>Solana leverages cutting-edge technology like Proof-of-History, ensuring unprecedented speed and reliability.</p>
     </section>
 
    <section id="advantages" class="advantages">
@@ -399,22 +399,22 @@ button:active {
 
     <section id="gallery" class="gallery">
     <div class="gallery-item">
-        <img src="{{ url_for('static', filename='solo2.jpg') }}" alt="Image 1">
+        <img src="{{ url_for('static', filename='Sola2.jpg') }}" alt="Image 1">
         <h3>“NO BORDERS” CAMPAIGN</h3>
         <p>Our company has become an effective platform for cooperation between the most qualified specialists from different countries. Thanks to BIM, we provide assistance to clients from anywhere in the world</p>
     </div>
     <div class="gallery-item">
-        <img src="{{ url_for('static', filename='Solo3.jpg') }}" alt="Image 2">
+        <img src="{{ url_for('static', filename='Sola3.jpg') }}" alt="Image 2">
         <h3>WORKING IN BIM MINIMIZING THE RISK OF ERRORS</h3>
         <p>At all stages of design, construction and operation, all specialists work with the same software product, closely interacting with each other</p>
     </div>
     <div class="gallery-item">
-        <img src="{{ url_for('static', filename='Solo4.jpg') }}" alt="Image 3">
+        <img src="{{ url_for('static', filename='Sola4.jpg') }}" alt="Image 3">
         <h3>HIGH-LEVEL MANAGEMENT</h3>
         <p>With the help of BIM, we turn all volumetric construction processes (architecture, civil engineering, MEP, oil and gas industry) into a single and understandable system</p>
     </div>
     <div class="gallery-item">
-        <img src="{{ url_for('static', filename='Solo5.jpg') }}" alt="Image 4">
+        <img src="{{ url_for('static', filename='Sola5.jpg') }}" alt="Image 4">
         <h3>INTERNATIONAL STANDARD SERVICES</h3>
         <p>We are one of the first and largest company that trains and creates project teams based on the requirements of design offices in Israel</p>
     </div>
@@ -520,7 +520,7 @@ button:active {
 
     solanaLocations.forEach(loc => {
         L.marker([loc.lat, loc.lng]).addTo(map)
-            .bindPopup(`<b>${loc.name}</b><br>BIM Leaders LTD Office`);
+            .bindPopup(`<b>${loc.name}</b><br>Solana Node`);
     });
 </script>
     
