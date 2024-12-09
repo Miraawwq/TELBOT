@@ -7,7 +7,7 @@ def home():
     return render_template('index.html')
     
 @app.route('/career')
-def jobs():
+def career():
     return render_template('career.html')
     
 if __name__ == '__main__':
