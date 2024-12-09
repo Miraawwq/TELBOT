@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - BIM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            background: linear-gradient(135deg, #1a1a40, #2a2a72);
+            overflow-x: hidden;
+        }
+/*БАР СВЕРХУ */
+      .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    background-color: #000; /* Черный фон */
+    color: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box; /* Учитываем отступы */
+}
+
+/* Логотип */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    height: 50px; /* Размер логотипа */
+}
+
+.logo span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #aaa;
+}
+
+/* Ссылки навигации */
+.nav-links ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links ul li {
+    position: relative;
+}
+
+.nav-links ul li a {
+    text-decoration: none;
+    font-size: 1rem;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.nav-links ul li a:hover {
+    color: #00d4ff; /* Сияющий голубой */
+}
+
+/* Анимация для выделения активной ссылки */
+.nav-links ul li::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #00d4ff;
+    transition: width 0.3s ease;
+}
+
+.nav-links ul li:hover::after {
+    width: 100%;
+}
+        section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden; /* Чтобы видео не выходило за пределы */
+}
+
+.hero video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Видео будет масштабироваться, чтобы занять весь блок */
+    z-index: -1; /* Видео будет на заднем плане */
+}
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            color: #ddd;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 30px;
+            font-size: 1.2rem;
+            color: #000;
+            background: #00d4ff;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #00b0d4;
+        }
+        .fade-in {
+            animation: fadeIn 2s;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+
+/* Добавление анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.content {
+            margin-top: 80px;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .filters {
+            width: 300px;
+            background: #1a1a1a;
+            padding: 20px;
+            color: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+        .filters h3 {
+            font-size: 1.2rem;
+            color: #00d4ff;
+            cursor: pointer;
+            margin: 0 0 10px;
+        }
+
+        .filters ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+            display: block;
+        }
+
+        .filters ul li {
+            margin: 10px 0;
+        }
+
+        .filters ul li input {
+            margin-right: 10px;
+        }
+
+        .filters h3.active + ul {
+            display: block;
+        }
+
+        .jobs-section {
+            flex-grow: 1;
+            background-color: #101010;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .job-card {
+            background: rgba(0, 0, 0, 0.7);
+            margin: 20px 0;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+
+        .apply-btn {
+            display: inline-block;
+            padding: 10px 30px;
+            font-size: 1rem;
+            color: #000;
+            background: #00d4ff;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .apply-btn:hover {
+            background: #00b0d4;
+        }
+
+        /* Футер */
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            color: #aaa;
+        }
+
+        footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #00b0d4;
+        }
+        .benefits-section {
+    text-align: center;
+    padding: 20px;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 элемента в ряд */
+    gap: 20px; /* Отступы между элементами */
+    margin: 0 auto;
+    max-width: 1200px; /* Ограничение ширины */
+}
+
+.benefit-item {
+    position: relative;
+    height: 200px; /* Высота каждого элемента */
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.benefit-item span {
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* Добавляем эффект при наведении */
+.benefit-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="BIM Logo">
+            <span>BIM Careers</span>
+        </div>
+         <nav class="nav-links">
+        <ul>
+            <li><a href="index.html"class="active">HOME</a></li>
+              <li><a href="career.html" class="active">CAREER</a></li>
+            <li><a href="#">SOLUTIONS</a></li>
+            <li><a href="#">RESOURCES</a></li>
+            <li><a href="#">CONTACT</a></li>
+        </ul>
+    </nav>
+    </div>
+
+    <!-- Геройский баннер -->
+   <div class="hero">
+    <video autoplay loop muted class="background-video">
+        <source src="{{ url_for('static', filename='video.mp4') }}" type="video/mp4">
+        Ваш браузер не поддерживает тег video.
+    </video>
+    <h1>Join Our Team</h1>
+    <p>BIM Leaders is a team of over 150 people working together. We are looking for outstanding people to join us and do work you can be proud of.</p>
+    <a href="#jobs" class="btn">See Open Positions</a>
+</div>
+
+    <!-- Список вакансий -->
+     <div class="content">
+        <!-- Фильтры -->
+        <div class="filters">
+            <h3 class="toggle">Location</h3>
+            <ul>
+                <li><input type="checkbox" id="all-locations" checked> All</li>
+                <li><input type="checkbox" id="ukraine"> Ukraine</li>
+                <li><input type="checkbox" id="poland"> Poland</li>
+                <li><input type="checkbox" id="israel"> Israel</li>
+                <li><input type="checkbox" id="uae"> United Arab Emirates</li>
+                <li><input type="checkbox" id="remote"> Remote</li>
+            </ul>
+
+            <h3 class="toggle">Category</h3>
+            <ul>
+                <li><input type="checkbox" id="all-categories" checked> All</li>
+                <li><input type="checkbox" id="architecture"> Architecture</li>
+                <li><input type="checkbox" id="civil-engineering"> Civil Engineering</li>
+                <li><input type="checkbox" id="marketing"> Marketing</li>
+                <li><input type="checkbox" id="operations"> Operations</li>
+                <li><input type="checkbox" id="oil-and-gas"> Oil and Gas</li>
+            </ul>
+             <h3 class="toggle">Level</h3>
+            <ul>
+                <li><input type="checkbox" id="all-categories" checked> All</li>
+                <li><input type="checkbox" id="Junior"> Junior</li>
+                <li><input type="checkbox" id="Junior"> Junior</li>
+                <li><input type="checkbox" id="Middle"> Middle</li>
+                <li><input type="checkbox" id="Senior"> Senior</li>
+                <li><input type="checkbox" id="Lead"> Lead</li>
+            </ul>
+        </div>
+
+        <!-- Секция вакансий -->
+       <div class="jobs-section" id="jobs">
+            <div class="job-card" data-location="remote" data-category="software">
+                <h3>Software Engineer</h3>
+                <p>Location: Remote</p>
+                <p>Description: Build scalable and innovative software solutions for our global clients.</p>
+                <a href="#" class="apply-btn">Apply Now</a>
+            </div>
+            <div class="job-card" data-location="new-york" data-category="design">
+                <h3>UI/UX Designer</h3>
+                <p>Location: Kiev, Ukraine</p>
+                <p>Description: Design user-friendly interfaces and ensure seamless user experiences.</p>
+                <a href="#" class="apply-btn">Apply Now</a>
+            </div>
+            <div class="job-card" data-location="london" data-category="management">
+                <h3>Project Manager</h3>
+                <p>Location: Israel, remote</p>
+                <p>Description: Lead teams and ensure the successful delivery of projects.</p>
+                <a href="#" class="apply-btn">Apply Now</a>
+            </div>
+        </div>
+    </div>
+     <!-- Секция фото -->
+<div class="benefits-section">
+    <h2>What Will You Get</h2>
+    <div class="benefits-grid">
+        <div class="benefit-item"> <img src="{{ url_for('static', filename='Sola4.jpg') }}" alt="Image 3">
+            <span>Comfortable and healthy working environment</span>
+        </div>
+        <div class="benefit-item"> <img src="{{ url_for('static', filename='Sola4.jpg') }}" alt="Image 3">
+            <span>International experience exchange</span>
+        </div>
+        <div class="benefit-item"> <img src="{{ url_for('static', filename='Sola4.jpg') }}" alt="Image 3">
+            <span>BIM Training</span>
+        </div>
+        <div class="benefit-item"> <img src="{{ url_for('static', filename='Sola4.jpg') }}" alt="Image 3">
+            <span>Work/life balance</span>
+        </div>
+        <div class="benefit-item"> <img src="{{ url_for('static', filename='Sola4.jpg') }}" alt="Image 3">
+            <span>English courses</span>
+        </div>
+        <div class="benefit-item"> <img src="{{ url_for('static', filename='Sola4.jpg') }}" alt="Image 3">
+            <span>Great corporate events</span>
+        </div>
+        <div class="benefit-item"> <img src="{{ url_for('static', filename='Sola4.jpg') }}" alt="Image 3">
+            <span>Office activities</span>
+        </div>
+        <div class="benefit-item"> <img src="{{ url_for('static', filename='Sola4.jpg') }}" alt="Image 3">
+            <span>Ability to grow up as a specialist</span>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        // Раскрытие и скрытие фильтров
+        document.querySelectorAll('.filters h3').forEach((header) => {
+            header.addEventListener('click', () => {
+                header.classList.toggle('active');
+            });
+        });
+    </script>
+<script>
+        // Добавление плавного скроллинга
+        document.querySelector('.btn').addEventListener('click', function (e) {
+            e.preventDefault(); // Останавливаем стандартное поведение ссылки
+            const targetSection = document.querySelector(this.getAttribute('href'));
+            targetSection.scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+    <!-- Футер -->
+    <footer>
+        <p>&copy; 2024 BIM Careers. All Rights Reserved. | <a href="/privacy">Privacy Policy</a></p>
+    </footer>
+</body>
+</html>
