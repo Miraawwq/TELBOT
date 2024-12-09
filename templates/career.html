@@ -244,7 +244,7 @@
         footer a:hover {
             color: #00b0d4;
         }
-        .benefits-section {
+       .benefits-section {
     text-align: center;
     padding: 20px;
 }
@@ -277,22 +277,18 @@
     top: 0;
     left: 0;
     z-index: 1; /* Задний план */
+    filter: brightness(70%); /* Затемнение изображения */
 }
 
 .benefit-item span {
     position: absolute;
-    top: 50%; /* Центрирование текста */
-    left: 50%;
-    transform: translate(-50%, -50%);
+    bottom: 20px; /* Текст ближе к низу */
+    left: 20px; /* Сдвигаем текст влево */
     font-size: 1rem;
     font-weight: bold;
     color: white;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
-    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
-    padding: 5px 10px;
-    border-radius: 5px;
     z-index: 2; /* Текст поверх изображения */
-    text-align: center;
 }
 
 /* Добавляем эффект при наведении */
@@ -300,6 +296,7 @@
     transform: scale(1.05);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
+
     </style>
 </head>
 <body>
