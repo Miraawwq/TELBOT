@@ -297,6 +297,66 @@
     transform: scale(1.05);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
+/* Общий контейнер для полоски с логотипами */
+/* Контейнер полоски */
+.logo-slider {
+    position: relative;
+    width: 100%; /* Полоса растягивается на всю ширину */
+    overflow: hidden;
+    background-color: #333; /* Темный фон */
+    padding: 15px 0;
+    border-top: 2px solid #f0f0f0; /* Легкая линия сверху */
+    border-bottom: 2px solid #f0f0f0; /* Легкая линия снизу */
+}
+
+/* Дорожка с логотипами */
+.logo-track {
+    display: flex;
+    gap: 40px; /* Отступы между логотипами */
+    animation: scroll 20s linear infinite; /* Анимация прокрутки */
+}
+
+/* Элемент с логотипом */
+.logo-item {
+    position: relative;
+    width: 120px; /* Ширина каждого логотипа */
+    height: 80px; /* Высота каждого логотипа */
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Логотипы */
+.logo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Адаптивность изображений */
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1; /* Логотип в фоне */
+    filter: brightness(70%); /* Затемнение изображений */
+}
+
+/* Эффект при наведении */
+.logo-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Анимация для прокрутки логотипов */
+@keyframes scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
 
     </style>
 </head>
@@ -415,7 +475,22 @@
         </div>
     </div>
 </div>
-
+<!-- Логотипы повторяются для бесконечного эффекта -->
+<div class="logo-slider">
+    <div class="logo-track">
+        <img src="autocad.png" alt="AutoCAD Logo">
+        <img src="revit.png" alt="Revit Logo">
+        <img src="blender.png" alt="Blender Logo">
+        <img src="3dsmax.png" alt="3ds Max Logo">
+        <img src="sketchup.png" alt="SketchUp Logo">
+        <!-- Логотипы повторяются для бесконечного эффекта -->
+        <img src="autocad.png" alt="AutoCAD Logo">
+        <img src="revit.png" alt="Revit Logo">
+        <img src="blender.png" alt="Blender Logo">
+        <img src="3dsmax.png" alt="3ds Max Logo">
+        <img src="sketchup.png" alt="SketchUp Logo">
+    </div>
+</div>
 
     <script>
         // Раскрытие и скрытие фильтров
