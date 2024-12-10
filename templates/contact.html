@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - BIM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            background: linear-gradient(135deg, #1a1a40, #2a2a72);
+            overflow-x: hidden;
+        }
+/*БАР СВЕРХУ */
+      .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    background-color: #000; /* Черный фон */
+    color: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box; /* Учитываем отступы */
+}
+
+/* Логотип */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    height: 50px; /* Размер логотипа */
+}
+
+.logo span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #aaa;
+}
+
+/* Ссылки навигации */
+.nav-links ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links ul li {
+    position: relative;
+}
+
+.nav-links ul li a {
+    text-decoration: none;
+    font-size: 1rem;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.nav-links ul li a:hover {
+    color: #00d4ff; /* Сияющий голубой */
+}
+
+/* Анимация для выделения активной ссылки */
+.nav-links ul li::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #00d4ff;
+    transition: width 0.3s ease;
+}
+
+.nav-links ul li:hover::after {
+    width: 100%;
+}
+        section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden; /* Чтобы видео не выходило за пределы */
+}
+.contacts-section {
+    text-align: center;
+    background: linear-gradient(120deg, #2e2e2e, #1a1a1a);
+    padding: 50px 20px;
+    color: white;
+}
+
+.contacts-section h2 {
+    font-size: 2.5rem;
+    color: #00FFFF;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+.contacts-details {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 30px;
+}
+
+.location-info h3 {
+    color: #00FFFF;
+    margin-bottom: 10px;
+}
+
+.location-info p {
+    font-size: 1rem;
+    color: #cccccc;
+}
+
+.contact-links {
+    margin: 20px 0;
+    font-size: 1.2rem;
+    color: #00FFFF;
+}
+
+.contact-links a {
+    color: #00FFFF;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.contact-links span {
+    margin: 0 5px;
+}
+
+.additional-info {
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1rem;
+}
+
+.additional-info h4 {
+    font-size: 1.5rem;
+    color: #00FFFF;
+    margin-top: 20px;
+}
+
+.additional-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.additional-info ul li {
+    margin-bottom: 10px;
+    color: #cccccc;
+}
+/* Футер */
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            color: #aaa;
+        }
+
+        footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #00b0d4;
+        }
+
+
+</style>
+</head>
+<body>
+    <!-- Навигация -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.jpg') }}" alt="BIM Logo">
+            <span>BIM Careers</span>
+        </div>
+         <nav class="nav-links">
+    <ul>
+        <li><a href="/" class="active">HOME</a></li>
+        <li><a href="/career" class="active">CAREER</a></li>
+        <li><a href="#">SOLUTIONS</a></li>
+        <li><a href="#">RESOURCES</a></li>
+         <li><a href="/contact" class="active">CONTACT</a></li>
+    </ul>
+</nav>
+    </div>
+    <div class="contacts-section">
+    <h2>Contacts</h2>
+    <div class="contacts-details">
+        <div class="location-info">
+            <h3>Ukraine</h3>
+            <p>Kyiv, 1 Tovarna St, Trinity Business Center</p>
+            <p>Rivne, 112 Soborna St, Manhattan City Hall</p>
+        </div>
+        <div class="location-info">
+            <h3>Poland</h3>
+            <p>Warsaw, 30 Filtrowa St</p>
+        </div>
+        <div class="location-info">
+            <h3>Israel</h3>
+            <p>Rishon Lezion, 10 Yaldei Taharan St, West Rishon</p>
+        </div>
+    </div>
+    <div class="contact-links">
+        <a href="mailto:company@bim-ae.com">company@bim-ae.com</a>
+        <span>→</span>
+        <a href="https://linkedin.com">LinkedIn</a>
+        <span>→</span>
+        <a href="https://facebook.com">Facebook</a>
+    </div>
+    <div class="additional-info">
+        <h4>Offices</h4>
+        <ul>
+            <li>🇮🇱 Israel, Rishon Lezion, 10 Yaldei Taharan St, West Rishon</li>
+            <li>🇺🇦 Ukraine, Kyiv, 1 Tovarna St, Trinity Business Center</li>
+            <li>🇺🇦 Ukraine, Rivne, 112 Soborna St, Manhattan City Hall</li>
+            <li>🇵🇱 Poland, Warsaw, 30 Filtrowa St</li>
+            <li>🇦🇪 UAE, Dubai Media City, 2 Al Sufouh, Concord Tower</li>
+        </ul>
+        <h4>Contact Numbers</h4>
+        <ul>
+            <li>Israel: +972 52 490 5100</li>
+            <li>Ukraine: +380 94 712 0758</li>
+            <li>Poland: +48 02 296 696</li>
+            <li>UAE: +971 58 588 6443</li>
+        </ul>
+    </div>
+</div>
+
+
+<footer>
+        <p>&copy; 2024 BIM Careers. All Rights Reserved. | <a href="/privacy">Privacy Policy</a></p>
+    </footer>
+</body>
+</html>
