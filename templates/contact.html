@@ -90,14 +90,16 @@
             text-align: center;
         }
         .hero {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden; /* Чтобы видео не выходило за пределы */
-}
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: url("{{ url_for('static', filename='photocont.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
 .contacts-section {
     text-align: center;
     background: linear-gradient(120deg, #2e2e2e, #1a1a1a);
