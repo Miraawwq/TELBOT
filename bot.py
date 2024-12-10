@@ -9,6 +9,10 @@ def home():
 @app.route('/career')
 def career():
     return render_template('career.html')
+
+@app.route('/contact')
+def career():
+    return render_template('career.html')
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8443)
