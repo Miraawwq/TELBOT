@@ -11,7 +11,7 @@ def career():
     return render_template('career.html')
 
 @app.route('/contact')
-def career():
+def contact():
     return render_template('contact.html')
     
 if __name__ == '__main__':
