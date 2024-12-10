@@ -297,6 +297,76 @@
     transform: scale(1.05);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
+.feedbacks-section {
+    text-align: center;
+    background: linear-gradient(120deg, #1a1a1a, #1a1a1a); /* Цветовая схема вашего сайта */
+    padding: 50px 20px;
+    color: white;
+}
+
+.feedbacks-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #00FFFF; /* Яркий акцентный цвет под общий стиль */
+    font-family: 'Orbitron', sans-serif; /* Футуристический стиль шрифта */
+    text-transform: uppercase; /* Текст в верхнем регистре */
+    letter-spacing: 2px; /* Разряженность для минималистичного эффекта */
+    text-shadow: 0px 4px 10px rgba(0, 255, 255, 0.5); /* Неоновая подсветка */
+}
+
+.feedbacks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.feedback-item {
+    background: rgba(0, 0, 0, 0.8); /* Темный фон блока */
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feedback-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.7);
+}
+
+.feedback-item p {
+    font-style: italic;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #d4d4d4;
+}
+
+.feedback-author {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.feedback-author img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid #4CAF50; /* Цвет границы аватарки */
+}
+
+.feedback-author h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+}
+
+.feedback-author span {
+    font-size: 0.85rem;
+    color: #999999;
+    font-family: 'Roboto', sans-serif;
+}
     </style>
 </head>
 <body>
@@ -411,6 +481,51 @@
         </div>
         <div class="benefit-item"> <img src="{{ url_for('static', filename='image4.jpg') }}" alt="Image 3">
             <span>Ability to grow up as a specialist</span>
+        </div>
+    </div>
+</div>
+<div class="feedbacks-section">
+    <h2>Feedbacks</h2>
+    <div class="feedbacks-grid">
+        <div class="feedback-item">
+            <p>“Працюючи на посаді Lead Engineer в BIM Leaders вже більше 3-х років, я з впевненістю можу сказати, що це одна з найкращих компаній в якій мені доводилось працювати....”</p>
+            <div class="feedback-author">
+                <img src="{{ url_for('static', filename='image12.jpg') }}" alt="Volodymyr">
+                <div>
+                    <h4>Borkivskyi Volodymyr</h4>
+                    <span>Pipeline Engineer</span>
+                </div>
+            </div>
+        </div>
+        <div class="feedback-item">
+            <p>“Работаю в компании BIM Leaders больше одного года, на должности HR. Компанию нахожу как достаточно перспективную,…”</p>
+            <div class="feedback-author">
+                <img src="{{ url_for('static', filename='image11.jpg') }}" alt="Mykhailo">
+                <div>
+                    <h4>Olena Nalapko</h4>
+                    <span>MEP Engineer</span>
+                </div>
+            </div>
+        </div>
+        <div class="feedback-item">
+            <p>“As an engineer working in the design department of BIM Leaders, I am thrilled to be a part of a team that is leading the way in Building Information Modeling (BIM)...”</p>
+            <div class="feedback-author">
+                <img src="{{ url_for('static', filename='image10.jpg') }}" alt="Sergii">
+                <div>
+                    <h4>Prosper Chimombe</h4>
+                    <span>Monday Admin</span>
+                </div>
+            </div>
+        </div>
+        <div class="feedback-item">
+            <p>“I’ve been working with BIM Leaders LTD for more than 4 years and had a chance to observe a qualitative development of services provided by the company...”</p>
+            <div class="feedback-author">
+                <img src="{{ url_for('static', filename='image9.jpg') }}" alt="Yuliya">
+                <div>
+                    <h4>Yuliya Savina</h4>
+                    <span>Architect</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
