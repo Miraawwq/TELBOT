@@ -13,7 +13,15 @@
             background: linear-gradient(135deg, #1a1a40, #2a2a72);
             overflow-x: hidden;
         }
-
+.video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+        }
         /* БАР СВЕРХУ */
         .navbar {
             display: flex;
@@ -226,10 +234,41 @@
     transform: scale(1.05);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
 }
+/* Текстовый блок с разделением */
+        .split-text-block {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 50px 20px;
+        }
 
+        .split-text-block div {
+            flex: 1;
+            text-align: justify;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+        }
+
+        .split-text-block div h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #00d4ff;
+        }
+
+        .split-line {
+            width: 2px;
+            height: auto;
+            background: #00d4ff;
+        }
     </style>
 </head>
 <body>
+ <video autoplay muted loop class="video-background">
+        <source src="background.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
     <div class="navbar">
         <div class="logo">
             <img src="{{ url_for('static', filename='logo.jpg') }}" alt="BIM Logo">
@@ -279,7 +318,18 @@
             </div>
         </div>
     </section>
-
+ <!-- Блок с разделением -->
+    <section class="split-text-block">
+        <div>
+            <h2>Our Projects: Excellence in Every Detail</h2>
+            <p>At BIM Leaders, we are dedicated to delivering exceptional projects that set new standards in the construction and design industry. Our team consistently applies the latest technologies and industry best practices to ensure every project is completed with precision and innovation. We don't just build; we create lasting value that enhances the lives of those who experience it. With a focus on quality, sustainability, and functionality, we pride ourselves on transforming ideas into reality. Our portfolio is a testament to the impact we make, showcasing a range of successful, cutting-edge projects that demonstrate our commitment to excellence.</p>
+        </div>
+        <div class="split-line"></div>
+        <div>
+            <h2>Why We Work with the Best</h2>
+            <p>Collaboration is at the heart of everything we do. BIM Leaders partners with top-tier professionals, suppliers, and industry leaders to ensure every project exceeds expectations. By working with the best, we bring unparalleled expertise, cutting-edge technology, and a wealth of experience to every stage of the process. Our extensive network of partners and stakeholders allows us to access the best resources available, ensuring that each project is completed on time, within budget, and to the highest possible standards. We value strong relationships and strive to cultivate trust, which is why our clients return to us again and again. Together, we make exceptional projects a reality.</p>
+        </div>
+    </section>
     <footer>
         <p>&copy; 2024 BIM Leaders LTD. All Rights Reserved. | <a href="/privacy">Privacy Policy</a></p>
     </footer>
