@@ -262,6 +262,72 @@
             height: auto;
             background: #00d4ff;
         }
+.moving-icons-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px;
+    background-color: #1a013f;
+    color: white;
+}
+
+.text-container {
+    max-width: 40%;
+}
+
+.text-container h1 {
+    font-size: 2.5rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.icons-container {
+    position: relative;
+    max-width: 60%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.icons-row {
+    display: flex;
+    gap: 20px;
+    animation: move-right 10s linear infinite;
+}
+
+.top-row {
+    animation: move-right 10s linear infinite;
+}
+
+.bottom-row {
+    animation: move-left 10s linear infinite;
+}
+
+.icons-row img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+/* Анимации */
+@keyframes move-right {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes move-left {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
     </style>
 </head>
 <body>
@@ -330,6 +396,27 @@
             <p>Collaboration is at the heart of everything we do. BIM Leaders partners with top-tier professionals, suppliers, and industry leaders to ensure every project exceeds expectations. By working with the best, we bring unparalleled expertise, cutting-edge technology, and a wealth of experience to every stage of the process. Our extensive network of partners and stakeholders allows us to access the best resources available, ensuring that each project is completed on time, within budget, and to the highest possible standards. We value strong relationships and strive to cultivate trust, which is why our clients return to us again and again. Together, we make exceptional projects a reality.</p>
         </div>
     </section>
+<section class="moving-icons-section">
+    <div class="text-container">
+        <h1>Whatever your stack, it runs on Render.</h1>
+    </div>
+    <div class="icons-container">
+        <div class="icons-row top-row">
+            <img src="icon1.png" alt="Icon 1">
+            <img src="icon2.png" alt="Icon 2">
+            <img src="icon3.png" alt="Icon 3">
+            <img src="icon4.png" alt="Icon 4">
+            <img src="icon5.png" alt="Icon 5">
+        </div>
+        <div class="icons-row bottom-row">
+            <img src="icon6.png" alt="Icon 6">
+            <img src="icon7.png" alt="Icon 7">
+            <img src="icon8.png" alt="Icon 8">
+            <img src="icon9.png" alt="Icon 9">
+            <img src="icon10.png" alt="Icon 10">
+        </div>
+    </div>
+</section>
     <footer>
         <p>&copy; 2024 BIM Leaders LTD. All Rights Reserved. | <a href="/privacy">Privacy Policy</a></p>
     </footer>
@@ -357,6 +444,17 @@
         });
 
         window.addEventListener('resize', updateCarousel);
+    </script>
+<script>
+        // Example: Pause animation on hover
+document.querySelectorAll('.icons-row').forEach(row => {
+    row.addEventListener('mouseenter', () => {
+        row.style.animationPlayState = 'paused';
+    });
+    row.addEventListener('mouseleave', () => {
+        row.style.animationPlayState = 'running';
+    });
+});
     </script>
 </body>
 </html>
