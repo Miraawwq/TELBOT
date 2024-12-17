@@ -378,6 +378,44 @@
         button:hover {
             background: #00ffab;
         }
+        .github-container {
+    width: 100%;
+    flex: 1;
+    padding: 50px 0;
+    text-align: center;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), /* Затемняющий слой */
+         background: url("{{ url_for('static', filename='Solo.gif') }}") center/cover no-repeat; /* Фото на фоне */
+    background-blend-mode: overlay; /* Наложение */
+}
+
+    .github-container h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #00d4ff;
+    }
+
+    .github-container p {
+        font-size: 1.2rem;
+        color: #aaa;
+    }
+
+    .cursor-following-face {
+        margin-top: 30px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+    }
+
+    .cursor-following-face img {
+        width: 100px;
+        height: 100px;
+        transition: transform 0.1s ease-out;
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+    }
     </style>
 </head>
 <body>
@@ -483,6 +521,15 @@
 
         <div class="output" id="cost-output">Estimated Cost: $0</div>
     </div>
+    <div class="github-container">
+    <div class="github-content">
+        <h2>Explore More Projects</h2>
+        <p>Stay curious and explore new opportunities with us.</p>
+    </div>
+    <div class="cursor-following-face">
+        <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Face" id="face-image">
+    </div>
+</div>
     <footer>
         <p>&copy; 2024 BIM Leaders LTD. All Rights Reserved. | <a href="/privacy">Privacy Policy</a></p>
     </footer>
@@ -545,5 +592,19 @@ document.querySelectorAll('.icons-row').forEach(row => {
             document.getElementById('cost-output').textContent = `Estimated Cost: $${totalCost}`;
         }
     </script>
+    <script>
+    const faceImage = document.getElementById('face-image');
+
+    document.addEventListener('mousemove', (e) => {
+        const { clientX, clientY } = e;
+        const windowWidth = window.innerWidth / 2;
+        const windowHeight = window.innerHeight / 2;
+
+        const offsetX = (clientX - windowWidth) / 20;
+        const offsetY = (clientY - windowHeight) / 20;
+
+        faceImage.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+    });
+</script>
 </body>
 </html>
