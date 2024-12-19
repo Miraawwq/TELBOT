@@ -10,18 +10,10 @@
             margin: 0;
             font-family: 'Orbitron', sans-serif;
             color: white;
-            background: linear-gradient(135deg, #1a1a40, #2a2a72);
+            background: linear-gradient(135deg, #111, #333); /* Новый фон */
             overflow-x: hidden;
         }
-.video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            object-fit: cover;
-        }
+
         /* БАР СВЕРХУ */
         .navbar {
             display: flex;
@@ -182,7 +174,7 @@
         .projects-section {
     padding: 100px 20px;
     text-align: center;
-    background: linear-gradient(135deg, #202040, #2c2c54);
+    background: linear-gradient(135deg, #111, #333);
     color: white;
 }
 
@@ -206,7 +198,7 @@
 }
 
 .project-card {
-    background: #1a1a40;
+    background: linear-gradient(135deg, #111, #333);
     border-radius: 10px;
     overflow: hidden;
     text-align: left;
@@ -239,6 +231,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background: linear-gradient(135deg, #111, #333);
             gap: 20px;
             padding: 50px 20px;
         }
@@ -267,7 +260,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 50px;
-    background-color: #1a013f;
+    background: linear-gradient(135deg, #111, #333);
     color: white;
 }
 
@@ -328,56 +321,109 @@
         transform: translateX(-100%);
     }
 }
+
+
+:root {
+    --container-bg-start: rgba(20, 30, 50, 0.9);
+    --container-bg-end: rgba(50, 80, 100, 0.9);
+    --button-bg: #00d4ff;
+    --button-hover-bg: #00ffab;
+    --text-color: #1a1a2e;
+    --input-bg: #333;
+    --input-border-color: #b0b0b0;
+    --input-focus-border-color: #00d4ff;
+    --input-focus-bg: #444;
+    --output-color: #00ffab;
+    --heading-color: #00d4ff;
+    --label-color: #b0b0b0;
+}
+
 .calculator-container {
-            max-width: 600px;
-            margin: 50px auto;
-            background: #0f3460;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
-        }
+    max-width: 600px;
+    margin: 90px auto;
+    background: linear-gradient(135deg, var(--container-bg-start), var(--container-bg-end));
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    transition: background 0.5s ease;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
 
-        .calculator-container h1 {
-            font-size: 2rem;
-            color: #00d4ff;
-            margin-bottom: 20px;
-        }
+.calculator-container.changed {
+    background: linear-gradient(135deg, rgba(50, 30, 20, 0.9), rgba(100, 80, 50, 0.9));
+}
 
-        label {
-            display: block;
-            font-size: 1.2rem;
-            margin: 15px 0 5px;
-        }
+.calculator-container h1 {
+    font-size: 2.2rem;
+    color: var(--heading-color);
+    margin-bottom: 30px;
+    text-align: center;
+    letter-spacing: 1px;
+}
 
-        select, input {
-            font-size: 1rem;
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: none;
-            width: 100%;
-        }
+label {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: var(--label-color);
+    font-weight: bold;
+}
 
-        .output {
-            font-size: 1.5rem;
-            color: #00ffab;
-            margin-top: 20px;
-        }
+.calculator-input, .calculator-select {
+    font-size: 1rem;
+    padding: 12px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    border: 1px solid var(--input-border-color);
+    width: 100%;
+    background: var(--input-bg);
+    color: #fff;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
 
-        button {
-            font-size: 1rem;
-            background: #00d4ff;
-            color: #1a1a2e;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
+.calculator-input:focus, .calculator-select:focus {
+    outline: none;
+    border-color: var(--input-focus-border-color);
+    background: var(--input-focus-bg);
+}
 
-        button:hover {
-            background: #00ffab;
-        }
+.calculator-output {
+    font-size: 1.5rem;
+    color: var(--output-color);
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.calculator-button {
+    font-size: 1.1rem;
+    background: var(--button-bg);
+    color: var(--text-color);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s ease;
+    width: 100%;
+    margin-top: 15px;
+    box-sizing: border-box;
+}
+
+.calculator-button:hover {
+    background: var(--button-hover-bg);
+    transform: scale(1.05);
+}
+
+.calculator-button:active {
+    transform: scale(0.98);
+}
+
+
+
+
+
         .github-container {
     width: 100%;
     flex: 1;
@@ -386,10 +432,7 @@
     color: white;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
-    background: 
-        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), /* Затемняющий слой */
-         background-image: url("{{ url_for('static', filename='moment.gif') }}"); /* Фото на фоне */
-    background-blend-mode: overlay; /* Наложение */
+    background: linear-gradient(135deg, #111, #333);
 }
 
     .github-container h2 {
@@ -416,13 +459,176 @@
         transition: transform 0.1s ease-out;
         filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
     }
+
+    .architecture-animation {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    background: linear-gradient(135deg, #111, #333);
+    color: white;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.crane-container {
+    position: absolute;
+    top: 50px;
+    left: 20%;
+    width: 200px;
+    height: 300px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.crane {
+    position: relative;
+    width: 50px;
+    height: 300px;
+}
+
+.crane-arm {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 200px;
+    height: 10px;
+    background: #00d4ff;
+    transform: translateX(-50%);
+}
+
+.crane-cable {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    width: 2px;
+    height: 150px;
+    background: #00d4ff;
+    transform: translateX(-50%);
+    animation: cable-move 3s infinite ease-in-out;
+}
+
+.crane-block {
+    position: absolute;
+    top: 160px;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    background: #00d4ff;
+    transform: translateX(-50%);
+    animation: block-lift 3s infinite ease-in-out;
+}
+
+@keyframes cable-move {
+    0%, 100% {
+        height: 150px;
+    }
+    50% {
+        height: 80px;
+    }
+}
+
+@keyframes block-lift {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-70px);
+    }
+}
+
+.building {
+    position: relative;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 50px;
+}
+
+.block {
+    width: 100px;
+    height: 100px;
+    background: #00d4ff;
+    opacity: 0;
+    transform: translateY(100px);
+    animation: build-block 1.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+.block-1 {
+    animation-delay: 1s;
+}
+
+.block-2 {
+    animation-delay: 2s;
+}
+
+.block-3 {
+    animation-delay: 3s;
+}
+
+@keyframes build-block {
+    0% {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animated-title {
+    font-size: 2.5rem;
+    margin: 20px 0;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fade-in 2s 4.5s ease-out forwards;
+    color: #00d4ff;
+}
+
+.animated-description {
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fade-in 2s 5s ease-out forwards;
+    color: #ccc;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
     </style>
 </head>
 <body>
- <video autoplay muted loop class="video-background">
-        <source src="background.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <section class="architecture-animation">
+    <div class="crane-container">
+        <div class="crane">
+            <div class="crane-arm"></div>
+            <div class="crane-cable"></div>
+            <div class="crane-block"></div>
+        </div>
+    </div>
+    <div class="building">
+        <div class="block block-1"></div>
+        <div class="block block-2"></div>
+        <div class="block block-3"></div>
+    </div>
+    <h2 class="animated-title">Creating an architectural future</h2>
+    <p class="animated-description">
+        Every detail matters. We build your dream home.
+    </p>
+</section>
+
     <div class="navbar">
         <div class="logo">
             <img src="{{ url_for('static', filename='logo.jpg') }}" alt="BIM Logo">
@@ -505,22 +711,24 @@
         </div>
     </div>
 </section>
-<div class="calculator-container">
-        <h1>Project Cost Estimator</h1>
+<div class="calculator-container" id="calculator-container">
+    <h1>Project Cost Estimator</h1>
 
-        <label for="service-type">Select Service:</label>
-        <select id="service-type">
-            <option value="architecture">Architecture Design</option>
-            <option value="gas-engineering">Gas Engineering</option>
-        </select>
+    <label for="service-type">Select Service:</label>
+    <select id="service-type" class="calculator-select" onchange="changeBackground()">
+        <option value="architecture">Architecture Design</option>
+        <option value="gas-engineering">Gas Engineering</option>
+    </select>
 
-        <label for="work-amount">Work Amount (hours or m²):</label>
-        <input type="number" id="work-amount" placeholder="Enter amount">
+    <label for="work-amount">Work Amount (hours or m²):</label>
+    <input type="number" id="work-amount" class="calculator-input" placeholder="Enter amount">
 
-        <button onclick="calculateCost()">Estimate Cost</button>
+    <button class="calculator-button" onclick="calculateCost()">Estimate Cost</button>
 
-        <div class="output" id="cost-output">Estimated Cost: $0</div>
-    </div>
+    <div class="calculator-output" id="cost-output">Estimated Cost: $0</div>
+</div>
+
+
     <div class="github-container">
     <div class="github-content">
         <h2>Explore More Projects</h2>
@@ -605,6 +813,26 @@ document.querySelectorAll('.icons-row').forEach(row => {
 
         faceImage.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
     });
+</script>
+<script>
+function changeBackground() {
+    const container = document.getElementById("calculator-container");
+    container.classList.toggle("changed");
+}
+
+function calculateCost() {
+    const workAmount = document.getElementById("work-amount").value;
+    const serviceType = document.getElementById("service-type").value;
+    let cost = 0;
+
+    if (serviceType === "architecture") {
+        cost = workAmount * 50; // Пример стоимости за m²
+    } else if (serviceType === "gas-engineering") {
+        cost = workAmount * 30; // Пример стоимости за m²
+    }
+
+    document.getElementById("cost-output").textContent = `Estimated Cost: $${cost}`;
+}
 </script>
 </body>
 </html>
