@@ -353,7 +353,92 @@ button:active {
     height: 150px;
     object-fit: contain; /* Сохраняет пропорции логотипа */
 }
+.styled-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px;
+    position: relative;
+    background: linear-gradient(135deg, #111, #333); /* Новый фон */
+    overflow: hidden;
+}
 
+.styled-section:nth-child(even) {
+    background: linear-gradient(135deg, #111, #333); /* Новый фон */
+}
+
+/* Оформление контента */
+.content {
+    max-width: 800px;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeInUp 1.5s ease-out forwards;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ddd;
+    text-transform: uppercase;
+    border-bottom: 2px solid #00aaff;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.section-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #ddd;
+}
+
+/* Анимация появления */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Декоративные элементы (для архитектурного стиля) */
+.styled-section::before,
+.styled-section::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: rgba(0, 170, 255, 0.1);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.styled-section::before {
+    top: -100px;
+    left: -50px;
+    transform: scale(1.5);
+}
+
+.styled-section::after {
+    bottom: -100px;
+    right: -50px;
+    transform: scale(1);
+}
+
+/* Адаптивный дизайн */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .section-text {
+        font-size: 1rem;
+    }
+}
 
     </style>
 </head>
@@ -384,15 +469,26 @@ button:active {
         <a href="#about" class="btn">Learn More</a>
     </div>
 
-    <section id="about">
-        <h2>BIM Leades LTD</h2>
-        <p>We are progressive company that offers innovative solutions in the field of Building information modeling, ensures effective process management on Revit, and is also engaged in continuous training of employees and popularization of BIM technology on a global scale.</p>
-    </section>
+    <section id="about" class="styled-section">
+    <div class="content">
+        <h2 class="section-title">BIM Leaders LTD</h2>
+        <p class="section-text">
+            We are a progressive company that offers innovative solutions in the field of Building Information Modeling,
+            ensures effective process management on Revit, and is also engaged in continuous training of employees and
+            popularization of BIM technology on a global scale.
+        </p>
+    </div>
+</section>
 
-    <section id="technologies" class="technologies">
-        <h2>Our mission</h2>
-        <p>Transform the construction and design industry by making it more comfortable for customers, employees and people around the world.</p>
-    </section>
+<section id="technologies" class="styled-section">
+    <div class="content">
+        <h2 class="section-title">Our Mission</h2>
+        <p class="section-text">
+            Transform the construction and design industry by making it more comfortable for customers, employees, and
+            people around the world.
+        </p>
+    </div>
+</section>
 
    <section id="advantages" class="advantages">
     <h2>Industries of BIM Leaders LTD</h2>
