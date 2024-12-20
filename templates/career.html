@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Career - BIM</title>
+    <title>Home - BIM</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             font-family: 'Orbitron', sans-serif;
             color: white;
-            background: linear-gradient(135deg, #111, #333); /* Новый фон */
+            background: linear-gradient(135deg, #1a1a40, #2a2a72);
             overflow-x: hidden;
         }
 /*БАР СВЕРХУ */
@@ -195,7 +195,7 @@
             display: block;
         }
 
-                /* Фоновая секция */
+        /* Фоновая секция */
 .jobs-section {
     position: relative;
     background: linear-gradient(135deg, #1a1a1a, #292929);
@@ -301,6 +301,9 @@
         text-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
     }
 }
+
+
+
 
         /* Футер */
         footer {
@@ -454,9 +457,9 @@
     <ul>
         <li><a href="/" class="active">HOME</a></li>
         <li><a href="/career" class="active">CAREER</a></li>
-        <li><a href="/project" class="active">PROJECTS</a></li>
+        <li><a href="#">SOLUTIONS</a></li>
         <li><a href="#">RESOURCES</a></li>
-        <li><a href="/contact" class="active">CONTACT</a></li>
+        <li><a href="#">CONTACT</a></li>
     </ul>
 </nav>
     </div>
@@ -473,41 +476,10 @@
 </div>
 
     <!-- Список вакансий -->
-     <div class="content">
-        <!-- Фильтры -->
-        <div class="filters">
-            <h3 class="toggle">Location</h3>
-            <ul>
-                <li><input type="checkbox" id="all-locations" checked> All</li>
-                <li><input type="checkbox" id="ukraine"> Ukraine</li>
-                <li><input type="checkbox" id="poland"> Poland</li>
-                <li><input type="checkbox" id="israel"> Israel</li>
-                <li><input type="checkbox" id="uae"> United Arab Emirates</li>
-                <li><input type="checkbox" id="remote"> Remote</li>
-            </ul>
-
-            <h3 class="toggle">Category</h3>
-            <ul>
-                <li><input type="checkbox" id="all-categories" checked> All</li>
-                <li><input type="checkbox" id="architecture"> Architecture</li>
-                <li><input type="checkbox" id="civil-engineering"> Civil Engineering</li>
-                <li><input type="checkbox" id="marketing"> Marketing</li>
-                <li><input type="checkbox" id="operations"> Operations</li>
-                <li><input type="checkbox" id="oil-and-gas"> Oil and Gas</li>
-            </ul>
-             <h3 class="toggle">Level</h3>
-            <ul>
-                <li><input type="checkbox" id="all-categories" checked> All</li>
-                <li><input type="checkbox" id="Junior"> Junior</li>
-                <li><input type="checkbox" id="Junior"> Junior</li>
-                <li><input type="checkbox" id="Middle"> Middle</li>
-                <li><input type="checkbox" id="Senior"> Senior</li>
-                <li><input type="checkbox" id="Lead"> Lead</li>
-            </ul>
-        </div>
+     
 
         <!-- Секция вакансий -->
-      <div class="jobs-section" id="jobs">
+       <div class="jobs-section" id="jobs">
     <h2 class="section-title">Explore Our Vacancies</h2>
     <div class="job-container">
         <!-- Карточки вакансий -->
@@ -562,6 +534,8 @@
     </div>
     <div class="background-animation"></div> <!-- Новый фон -->
 </div>
+
+
      <!-- Секция фото -->
 <div class="benefits-section">
     <h2>What Will You Get</h2>
@@ -606,12 +580,12 @@
             </div>
         </div>
         <div class="feedback-item">
-            <p>“Работаю в компании BIM Leaders больше одного года, на должности HR. Компанию нахожу как достаточно перспективную. Це одна з найкращих компаній в якій мені доводилось працювати…”</p>
+            <p>“Работаю в компании BIM Leaders больше одного года, на должности HR. Компанию нахожу как достаточно перспективную,…”</p>
             <div class="feedback-author">
                 <img src="{{ url_for('static', filename='image11.jpg') }}" alt="Mykhailo">
                 <div>
                     <h4>Olena Nalapko</h4>
-                    <span>HR</span>
+                    <span>MEP Engineer</span>
                 </div>
             </div>
         </div>
@@ -655,7 +629,7 @@
             });
         });
     </script>
-<script>
+    <script>
        document.addEventListener("DOMContentLoaded", () => {
     const observerOptions = {
         threshold: 0.2, // Процент видимости секции, чтобы анимация началась
@@ -679,9 +653,10 @@
 });
 
     </script>
+
     <!-- Футер -->
     <footer>
-        <p>&copy; 2024 BIM Leaders LTD. All Rights Reserved. | <a href="/privacy">Privacy Policy</a></p>
+        <p>&copy; 2024 BIM Careers. All Rights Reserved. | <a href="/privacy">Privacy Policy</a></p>
     </footer>
 </body>
 </html>
