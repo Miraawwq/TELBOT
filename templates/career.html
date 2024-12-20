@@ -195,38 +195,112 @@
             display: block;
         }
 
-        .jobs-section {
-            flex-grow: 1;
-            background-color: #101010;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
+                /* Фоновая секция */
+.jobs-section {
+    position: relative;
+    background: linear-gradient(135deg, #1a1a1a, #292929);
+    padding: 40px 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    overflow: hidden;
+}
 
-        .job-card {
-            background: rgba(0, 0, 0, 0.7);
-            margin: 20px 0;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent);
+    z-index: -1;
+    animation: moveBackground 10s linear infinite;
+}
 
+@keyframes moveBackground {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-50%, -50%);
+    }
+}
 
-        .apply-btn {
-            display: inline-block;
-            padding: 10px 30px;
-            font-size: 1rem;
-            color: #000;
-            background: #00d4ff;
-            border-radius: 25px;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
+/* Заголовок */
+.section-title {
+    font-size: 2.5rem;
+    color: #ff66ff;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease-out;
+    text-shadow: 0 0 10px rgba(255, 102, 255, 0.5);
+}
+.section-title.visible, .job-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.section-title, .job-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease-out;
+}
+/* Карточки вакансий */
+.job-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    color: white;
+    text-align: left;
+    transform: translateY(50px);
+    opacity: 0;
+    transition: all 1s ease-out, box-shadow 0.5s;
+}
 
-        .apply-btn:hover {
-            background: #00b0d4;
-        }
+.job-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.6);
+    transform: scale(1.05);
+}
+.job-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Автоматическое размещение карточек */
+    gap: 20px; /* Расстояние между карточками */
+    justify-content: center; /* Центрирование контента */
+    align-items: center;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+/* Кнопки */
+.apply-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background: linear-gradient(135deg, #00d4ff, #ff00ff);
+    border-radius: 25px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.apply-btn:hover {
+    animation: btnGlow 1s infinite alternate;
+}
+
+@keyframes btnGlow {
+    0% {
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    }
+    100% {
+        text-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+    }
+}
 
         /* Футер */
         footer {
@@ -433,27 +507,61 @@
         </div>
 
         <!-- Секция вакансий -->
-       <div class="jobs-section" id="jobs">
-            <div class="job-card" data-location="remote" data-category="software">
-                <h3>Software Engineer</h3>
-                <p>Location: Remote</p>
-                <p>Description: Build scalable and innovative software solutions for our global clients.</p>
-                <a href="#" class="apply-btn">Apply Now</a>
-            </div>
-            <div class="job-card" data-location="new-york" data-category="design">
-                <h3>UI/UX Designer</h3>
-                <p>Location: Kiev, Ukraine</p>
-                <p>Description: Design user-friendly interfaces and ensure seamless user experiences.</p>
-                <a href="#" class="apply-btn">Apply Now</a>
-            </div>
-            <div class="job-card" data-location="london" data-category="management">
-                <h3>Project Manager</h3>
-                <p>Location: Israel, remote</p>
-                <p>Description: Lead teams and ensure the successful delivery of projects.</p>
-                <a href="#" class="apply-btn">Apply Now</a>
-            </div>
+      <div class="jobs-section" id="jobs">
+    <h2 class="section-title">Explore Our Vacancies</h2>
+    <div class="job-container">
+        <!-- Карточки вакансий -->
+        <div class="job-card" data-location="remote" data-category="software">
+            <h3>Software Engineer</h3>
+            <p>Location: Remote</p>
+            <p>Description: Build scalable and innovative software solutions for our global clients.</p>
+            <a href="#" class="apply-btn">Apply Now</a>
+        </div>
+        <div class="job-card" data-location="kiev" data-category="design">
+            <h3>UI/UX Designer</h3>
+            <p>Location: Kiev, Ukraine</p>
+            <p>Description: Design user-friendly interfaces and ensure seamless user experiences.</p>
+            <a href="#" class="apply-btn">Apply Now</a>
+        </div>
+         <div class="job-card" data-location="remote" data-category="software">
+            <h3>Software Engineer</h3>
+            <p>Location: Remote</p>
+            <p>Description: Build scalable and innovative software solutions for our global clients.</p>
+            <a href="#" class="apply-btn">Apply Now</a>
+        </div>
+        <div class="job-card" data-location="kiev" data-category="design">
+            <h3>UI/UX Designer</h3>
+            <p>Location: Kiev, Ukraine</p>
+            <p>Description: Design user-friendly interfaces and ensure seamless user experiences.</p>
+            <a href="#" class="apply-btn">Apply Now</a>
+        </div>
+        <div class="job-card" data-location="israel" data-category="management">
+            <h3>Project Manager</h3>
+            <p>Location: Israel, Remote</p>
+            <p>Description: Lead teams and ensure the successful delivery of projects.</p>
+            <a href="#" class="apply-btn">Apply Now</a>
+        </div>
+        <div class="job-card" data-location="berlin" data-category="engineering">
+            <h3>DevOps Engineer</h3>
+            <p>Location: Berlin, Germany</p>
+            <p>Description: Optimize our infrastructure and deployment pipelines for maximum efficiency.</p>
+            <a href="#" class="apply-btn">Apply Now</a>
+        </div>
+        <div class="job-card" data-location="london" data-category="finance">
+            <h3>Financial Analyst</h3>
+            <p>Location: London, UK</p>
+            <p>Description: Analyze market trends and provide insights to drive business decisions.</p>
+            <a href="#" class="apply-btn">Apply Now</a>
+        </div>
+        <div class="job-card" data-location="tokyo" data-category="marketing">
+            <h3>Marketing Specialist</h3>
+            <p>Location: Tokyo, Japan</p>
+            <p>Description: Create and execute innovative marketing campaigns for global audiences.</p>
+            <a href="#" class="apply-btn">Apply Now</a>
         </div>
     </div>
+    <div class="background-animation"></div> <!-- Новый фон -->
+</div>
      <!-- Секция фото -->
 <div class="benefits-section">
     <h2>What Will You Get</h2>
@@ -546,6 +654,30 @@
                 behavior: 'smooth'
             });
         });
+    </script>
+<script>
+       document.addEventListener("DOMContentLoaded", () => {
+    const observerOptions = {
+        threshold: 0.2, // Процент видимости секции, чтобы анимация началась
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target); // Убираем наблюдение после срабатывания
+            }
+        });
+    }, observerOptions);
+
+    const sections = document.querySelectorAll(".job-card, .section-title");
+    if (sections.length > 0) {
+        sections.forEach((section) => observer.observe(section));
+    } else {
+        console.error("Elements with classes '.job-card' or '.section-title' not found.");
+    }
+});
+
     </script>
     <!-- Футер -->
     <footer>
