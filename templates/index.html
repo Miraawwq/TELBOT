@@ -152,62 +152,107 @@
                 opacity: 1;
             }
         }
-        .advantages {
-    background: rgba(0, 0, 0, 0.5);
-    margin: 20px auto;
-    border-radius: 15px;
-    padding: 30px;
-    width: 80%; /* Ограничиваем ширину */
+
+
+       /* Общий стиль секции */
+.advantages {
+    background: linear-gradient(135deg, #1a1a1a, #333);
+    color: white;
+    padding: 50px 10px; /* Уменьшено расстояние сверху и снизу */
+    position: relative;
+    overflow: hidden;
+    min-height: 40vh; /* Уменьшена минимальная высота */
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    justify-content: flex-start; /* Приближает содержимое вверх */
 }
 
 .advantages h2 {
-    color: white;
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 20px;
+    font-size: 2.5rem;
+    color: #00d4ff;
+    margin-bottom: 20px; /* Уменьшено расстояние снизу */
+    margin-top: 10px; /* Добавлено небольшое расстояние сверху */
+    text-shadow: 2px 2px 5px #000;
 }
 
-.advantages .left, .advantages .right {
+/* Контейнер контента */
+.content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Кран */
+.crane {
+    width: 150px;
+    position: relative;
+}
+
+.left-crane img {
+    transform: scaleX(-1); /* Отзеркаливание крана слева */
+}
+
+.right-crane img {
+    transform: none;
+}
+
+.crane img {
+    width: 500%;
+    height: auto;
+}
+
+/* Контейнер для домика */
+.house {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    align-items: center;
+    gap: 20px;
 }
 
-.advantages .left li, .advantages .right li {
-    list-style: none;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px 20px;
-    border-radius: 10px;
-    color: white;
-    text-transform: uppercase;
+/* Ряды кирпичей */
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+/* Кирпичи */
+.brick {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.9rem;
     font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    position: relative;
+    white-space: nowrap; /* Отключение переноса текста */
+    overflow: hidden; /* Скрытие излишков текста */
+    text-overflow: ellipsis; /* Троеточие для длинного текста */
 }
 
-.advantages .left li::after, .advantages .right li::after {
+/* Размеры кирпичей */
+.brick.small { width: 120px; }
+.brick.medium { width: 150px; }
+.brick.large { width: 180px; }
+.brick.xlarge { width: 220px; }
+
+/* Неоновая линия */
+.brick::after {
     content: "";
     display: block;
     width: 100%;
-    height: 2px;
-    background-color: #00d4ff;
+    height: 3px;
+    background: linear-gradient(90deg, #00d4ff, rgba(0, 212, 255, 0.5));
     margin-top: 5px;
+    border-radius: 2px;
+    box-shadow: 0px 0px 8px rgba(0, 212, 255, 0.8);
 }
 
-/* Добавление анимации */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-.advantages li {
-    animation: fadeIn 1.5s ease;
-}
         .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -504,23 +549,34 @@ button:active {
 
    <section id="advantages" class="advantages">
     <h2>Industries of BIM Leaders LTD</h2>
-    <div class="left">
-        <ul>
-            <li>HEALTHCARE</li>
-            <li>EDUCATION</li>
-            <li>GOVERNMENT</li>
-            <li>MULTIFAMILY HOUSING</li>
-        </ul>
-    </div>
-    <div class="right">
-        <ul>
-            <li>CUSTOM HOMES</li>
-            <li>COMMERCIAL</li>
-            <li>INFRASTRUCTURE</li>
-            <li>OIL AND GAS</li>
-        </ul>
+    <div class="content">
+        <div class="crane left-crane">
+            <img src="crane.svg" alt="Crane">
+        </div>
+        <div class="house">
+            <div class="row">
+                <div class="brick small">HEALTHCARE</div>
+            </div>
+            <div class="row">
+                <div class="brick medium">EDUCATION</div>
+                <div class="brick medium">GOVERNMENT</div>
+            </div>
+            <div class="row">
+                <div class="brick large">MULTIFAMILY HOUSING</div>
+                <div class="brick large">CUSTOM HOMES</div>
+                <div class="brick large">COMMERCIAL</div>
+            </div>
+            <div class="row">
+                <div class="brick xlarge">INFRASTRUCTURE</div>
+                <div class="brick xlarge">OIL AND GAS</div>
+            </div>
+        </div>
+        <div class="crane right-crane">
+            <img src="crane.svg" alt="Crane">
+        </div>
     </div>
 </section>
+
 
     <section id="gallery" class="gallery">
     <div class="gallery-item">
